@@ -14,4 +14,4 @@ Par contre si vous voyez c'est quoi le prob feel free to change it.
 Besoin de Docker Toolbox. Celui-ci se prend une adresse IP lorsque vous le lancez (affiché en haut de la console).
 C'est l'adresse IP que vous devez utiliser dans votre browser pour accèder à l'app (et non pas localhost).
 
-
+# Numéro de cell d'Alex 418 719 4344 (Textez moi)
