@@ -1,7 +1,7 @@
 create DATABASE PlantsDatabase;
 use PlantsDatabase;
 
-create table PLANTS (
+create table plants (
 	id INT,
 	common_name VARCHAR(50),
 	family VARCHAR(50),
