@@ -13,8 +13,10 @@ RUN pip install -r requirements.txt
 # Copier le code de l’application dans le répertoire /
 ADD . /
 
-#Exposer le port 8080
+#Exposer les ports 8080 et 3306
 EXPOSE 8080
+EXPOSE 3306
+
 
 # Lancer le script app.py quand le container démarre
 CMD ["python","app.py"]
