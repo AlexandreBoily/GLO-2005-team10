@@ -6,8 +6,8 @@ class MySQLRepository:
     PORT = "3306"
     USERNAME = "root"
     PASSWORD = None
-    DATABASE_NAME = "plantsDatabase"
-    DATABASE_CONFIG_FILE = "./databaseconfig/plants.sql"
+    DATABASE_NAME = "EsportsWiki"
+    DATABASE_CONFIG_FILE = "./databasedata/config_init.sql"
 
     def __init__(self):
         self.connector = None
@@ -26,19 +26,11 @@ class MySQLRepository:
         self.__verify_connection()
         cursor = self.connector.cursor()
         configFile = open(self.DATABASE_CONFIG_FILE, "r")
-        commands = configFile.read().split(";")
-        for c in commands:
-            cursor.execute(c)
+        cursor.execute(configFile.read())
         configFile.close()
 
     def __verify_connection(self):
         if self.connector is None:
             self.__connect()
 
-    def get_mushrooms(self):
-        self.__verify_connection()
-        select_query = "SELECT DISTINCT common_name FROM plants"
-        cursor = self.connector.cursor()
-        cursor.execute(select_query)
 
-        return [{plants[0]} for plants in cursor]

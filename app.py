@@ -7,10 +7,8 @@ application = Flask(__name__)
 @application.route("/", methods=["GET","POST"])
 def index():
 
-    print("test")
     db = MySQLRepository()
-    plants = db.get_mushrooms()
-    return render_template('index.html', plants=plants)
+    return render_template('index.html')
 
     # return "Hello World test"
 if __name__ ==  "__main__":
