@@ -6,7 +6,7 @@ class MySQLRepository:
     PORT = "3306"
     USERNAME = "root"
     PASSWORD = None
-    DATABASE_NAME = "PlantsDatabase"
+    DATABASE_NAME = "plantsDatabase"
     DATABASE_CONFIG_FILE = "./databaseconfig/plants.sql"
 
     def __init__(self):
