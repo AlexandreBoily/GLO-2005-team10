@@ -18,5 +18,7 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
       - ./databaseconfig:/docker-entrypoint-initdb.d/:ro
+      - ./databaseconfig/configfile:/etc/mysql/conf.d
+      - ./databaseconfig/data:/var/lib/mysql-files
     container_name:
       db

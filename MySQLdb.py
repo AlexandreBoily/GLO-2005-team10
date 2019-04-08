@@ -16,21 +16,20 @@ class MySQLRepository:
         except Exception as exception:
             print(exception)
 
-        #self.__configure()
-
     def __connect(self):
         self.connector = connect(host=self.MYSQL_URI, port=self.PORT, user=self.USERNAME, password=self.PASSWORD,
                                  database=self.DATABASE_NAME)
 
-    def __configure(self):
-        self.__verify_connection()
-        cursor = self.connector.cursor()
-        configFile = open(self.DATABASE_CONFIG_FILE, "r")
-        cursor.execute(configFile.read())
-        configFile.close()
-
     def __verify_connection(self):
         if self.connector is None:
             self.__connect()
+
+    def getGames(self):
+        self.__verify_connection()
+        cursor = self.connector.cursor()
+        cursor.execute("SELECT game_name FROM GAMES")
+        games =  [{'game_name': game[0]} for game in cursor]
+        print(games)
+        return games
 
 

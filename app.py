@@ -8,7 +8,9 @@ application = Flask(__name__)
 def index():
 
     db = MySQLRepository()
-    return render_template('index.html')
+    games = db.getGames()
+    print(games)
+    return render_template('index.html', games=games)
 
     # return "Hello World test"
 if __name__ ==  "__main__":
