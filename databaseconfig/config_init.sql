@@ -16,15 +16,18 @@ CREATE TABLE IF NOT EXISTS LEAGUES(
     prize_pool DECIMAL(15,2),
     online BOOLEAN,
     game_id VARCHAR(50),
+    rules_id smallint,
     PRIMARY KEY (shorthand)
 );
 
 CREATE TABLE IF NOT EXISTS RULES(
+    id smallint NOT NULL,
     name VARCHAR(50) NOT NULL ,
     description TEXT,
     no_teams_per_match SMALLINT NOT NULL ,
     no_players_per_teams SMALLINT NOT NULL,
-    league_id VARCHAR(50) NOT NULL
+    game_id SMALLINT,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS TEAMS(
@@ -57,21 +60,6 @@ CREATE TABLE IF NOT EXISTS TEAMS_LEAGUES(
     league_id VARCHAR(50) NOT NULL
 );
 
-LOAD DATA INFILE '/var/lib/mysql-files/games_data.txt' INTO TABLE GAMES
-    FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-    LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
-
-LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.txt' INTO TABLE LEAGUES
-    FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-    LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
-
-LOAD DATA INFILE '/var/lib/mysql-files/players_data.csv' INTO TABLE PLAYERS
-    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
-    LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
-
 DELIMITER //
 
 CREATE TRIGGER teams_before_insert
@@ -102,3 +90,30 @@ BEGIN
 END //
 
 DELIMITER ;
+
+LOAD DATA INFILE '/var/lib/mysql-files/games_data.csv' INTO TABLE GAMES
+    FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
+LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.csv' INTO TABLE LEAGUES
+    FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
+LOAD DATA INFILE '/var/lib/mysql-files/players_data.csv' INTO TABLE PLAYERS
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
+LOAD DATA INFILE '/var/lib/mysql-files/rules_data.csv' INTO TABLE RULES
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
+LOAD DATA INFILE '/var/lib/mysql-files/organization_data.csv' INTO TABLE ORGANIZATION
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
+
