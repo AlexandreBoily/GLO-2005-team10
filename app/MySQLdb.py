@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from mysql.connector import connect
+import random
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -27,9 +28,8 @@ class MySQLRepository:
     def getGames(self):
         self.__verify_connection()
         cursor = self.connector.cursor()
-        cursor.execute("SELECT game_name FROM GAMES")
-        games =  [{'game_name': game[0]} for game in cursor]
-        print(games)
+        cursor.execute("SELECT r.id, g.id FROM GAMES g INNER JOIN RULES r ON g.id = r.game_id ORDER BY g.id")
+        games = [(game[1], game[0]) for game in cursor]
+        cursor.execute("SELECT game_id FROM LEAGUES")
         return games
-
 

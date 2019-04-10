@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   app:
-    build: .
+    build: ./app
     links:
       - db
     ports:
@@ -9,7 +9,7 @@ services:
     container_name:
       app
     volumes:
-      - .:/code
+      - ./app:/code
   db:
     image: mysql:8.0
     ports:

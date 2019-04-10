@@ -9,7 +9,7 @@ def index():
 
     db = MySQLRepository()
     games = db.getGames()
-    print(games)
+    #db.setRules(games)
     return render_template('index.html', games=games)
 
     # return "Hello World test"
