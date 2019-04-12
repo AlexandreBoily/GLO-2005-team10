@@ -28,8 +28,11 @@ class MySQLRepository:
     def getGames(self):
         self.__verify_connection()
         cursor = self.connector.cursor()
-        cursor.execute("SELECT r.id, g.id FROM GAMES g INNER JOIN RULES r ON g.id = r.game_id ORDER BY g.id")
-        games = [(game[1], game[0]) for game in cursor]
-        cursor.execute("SELECT game_id FROM LEAGUES")
+        cursor.execute("SELECT l.game_id FROM LEAGUES l WHERE l.rules_id IS NULL")
+        leagues = [leagues[0] for leagues in cursor]
+        games = []
+        for gid in leagues:
+            cursor.execute("SELECT r.id FROM RULES r WHERE r.game_id = %s ORDER BY rand() LIMIT 1", (gid,))
+            games += cursor.fetchall()
         return games
 
