@@ -149,4 +149,9 @@ LOAD DATA INFILE '/var/lib/mysql-files/organization_data.csv' INTO TABLE ORGANIZ
     LINES TERMINATED BY '\n'
     IGNORE 1 LINES;
 
+LOAD DATA INFILE '/var/lib/mysql-files/teams_data.csv' INTO TABLE TEAMS
+    FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+    LINES TERMINATED BY '\n'
+    IGNORE 1 LINES;
+
 
