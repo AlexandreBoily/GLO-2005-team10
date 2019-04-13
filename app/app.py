@@ -18,28 +18,28 @@ def index():
 @application.route("/games", methods=["GET"])
 def games():
     global db
-    games = db.getAllGames()
+    games = db.getAll("GAMES")
     return render_template('list.html', items=games, pageName='Games')
 
 
 @application.route("/leagues", methods=["GET"])
 def leagues():
     global db
-    games = db.getGames()
+    games = db.getAll("LEAGUES")
     return render_template('list.html', items=games, pageName='Leagues')
 
 
 @application.route("/players", methods=["GET"])
 def players():
     global db
-    games = db.getGames()
+    games = db.getAll("PLAYERS")
     return render_template('list.html', items=games, pageName='Players')
 
 
 @application.route("/teams", methods=["GET"])
 def teams():
     global db
-    games = db.getGames()
+    games = db.getAll("TEAMS")
     return render_template('list.html', items=games, pageName='Teams')
 
 

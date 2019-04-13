@@ -24,11 +24,20 @@ class MySQLRepository:
         if self.connector is None:
             self.__connect()
 
-    def getAllGames(self):
+    def __prepareGetAllSTMT(self, table_name):
+        switch = {
+            "LEAGUES": ("shorthand", "name"),
+            "GAMES": ("id", "game_name"),
+            "PLAYERS": ("id", "alias"),
+            "TEAMS": ("id", "name")
+        }
+        fields = switch.get(table_name, "error")
+        return (fields[0], fields[1], table_name)
+
+    def getAll(self, table_name):
         self.__verify_connection()
         cursor = self.connector.cursor()
-        getAllGamesSTMT = "SELECT * FROM GAMES"
-        cursor.execute(getAllGamesSTMT)
+        cursor.execute("SELECT %s, %s FROM %s", self.__prepareGetAllSTMT(table_name))
         games = [(game[0], game[1]) for game in cursor]
         return games
 
