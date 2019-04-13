@@ -7,6 +7,14 @@
     <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/normalize.css') }}" rel="stylesheet" />
 </head>
 <body>
+<form>
+    <ul>
+        <li><button type="submit" formaction="{{ url_for('games') }}" formmethod="get">Games</button></li>
+        <li><button type="submit" formaction="{{ url_for('leagues') }}" formmethod="get">Leagues</button></li>
+        <li><button type="submit" formaction="{{ url_for('players') }}" formmethod="get">Players</button></li>
+        <li><button type="submit" formaction="{{ url_for('teams') }}" formmethod="get">Teams</button></li>
+    </ul>
+</form>
     {{ id }}
 </body>
 </html>
