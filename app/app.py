@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from MySQLdb import MySQLRepository
+
+
 application = Flask(__name__)
 
 
@@ -39,6 +41,30 @@ def teams():
     global db
     games = db.getGames()
     return render_template('list.html', items=games, pageName='Teams')
+
+
+@application.route("/game/<id>", methods=["GET"])
+def game(id):
+    global db
+    return render_template('game.html', id=id)
+
+
+@application.route("/league/<id>", methods=["GET"])
+def league(id):
+    global db
+    return render_template('league.html', id=id)
+
+
+@application.route("/player/<id>", methods=["GET"])
+def player(id):
+    global db
+    return render_template('player.html', id=id)
+
+
+@application.route("/team/<id>", methods=["GET"])
+def team(id):
+    global db
+    return render_template('team.html', id=id)
 
 
 if __name__ ==  "__main__":
