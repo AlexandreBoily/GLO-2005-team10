@@ -42,7 +42,7 @@ class MySQLRepository:
         tmp = cursor.fetchone()
         game = {
             "id":  tmp[0],
-            "game_name": tmp[1]
+            "game_name": tmp[1].replace('"', '')
         }
 
         #Game list of leagues
