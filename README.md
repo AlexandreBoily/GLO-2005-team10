@@ -12,5 +12,10 @@ C'est l'adresse IP que vous devez utiliser dans votre browser pour accèder à l
 Assurez-vous aussi que votre éditeur de texte mets des séparateurs de ligne linux (\n) et non pas windows (\r\n) sinon
 docker va chialer.
 
+## Quelques erreurs qui pourrait arriver en buildant
+
+### secur-priv-file is enabled
+Assurez vous que le fichier /databaseconfig/configfile/custom.cnf est en read-only mode. On change cette configuration dans ce fichier mais docker ne le lira pas en buildant la db si il n'est pas en read-only mode. (Dans Pycharm, c'est le petit cadenas en bas à droite de l'éditeur)
+
 ### Numéro de cell d'Alex 418 719 4344
 
