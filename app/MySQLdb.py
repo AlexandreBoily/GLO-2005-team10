@@ -32,19 +32,14 @@ class MySQLRepository:
             "TEAMS": ("id", "name")
         }
         fields = switch.get(table_name, "error")
-        return (fields[0], fields[1], table_name)
+        return "SELECT {}, {} FROM {}".format(fields[0], fields[1], table_name)
 
     def getAll(self, table_name):
         self.__verify_connection()
         cursor = self.connector.cursor()
-<<<<<<< HEAD
-        cursor.execute("SELECT %s, %s FROM %s", self.__prepareGetAllSTMT(table_name))
-        games = [(game[0], game[1]) for game in cursor]
-=======
-        getAllGamesSTMT = "SELECT * FROM GAMES"
-        cursor.execute(getAllGamesSTMT)
+        tuples = self.__prepareGetAllSTMT(table_name)
+        cursor.execute(self.__prepareGetAllSTMT(table_name))
         games = [(game[0], game[1].replace('"', '')) for game in cursor]
->>>>>>> c0b18f800949819750839009927d26be99db8953
         return games
 
     def getGameByID(self, id):
