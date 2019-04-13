@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 from mysql.connector import connect
-import random
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -25,14 +24,32 @@ class MySQLRepository:
         if self.connector is None:
             self.__connect()
 
-    def getGames(self):
+    def getAllGames(self):
         self.__verify_connection()
         cursor = self.connector.cursor()
-        cursor.execute("SELECT l.game_id FROM LEAGUES l WHERE l.rules_id IS NULL")
-        leagues = [leagues[0] for leagues in cursor]
-        games = []
-        for gid in leagues:
-            cursor.execute("SELECT r.id FROM RULES r WHERE r.game_id = %s ORDER BY rand() LIMIT 1", (gid,))
-            games += cursor.fetchall()
+        getAllGamesSTMT = "SELECT * FROM GAMES"
+        cursor.execute(getAllGamesSTMT)
+        games = [(game[0], game[1]) for game in cursor]
         return games
+
+    def getGameByID(self, id):
+        self.__verify_connection()
+        cursor = self.connector.cursor()
+
+        #Get game name and id
+        getGameByIDSTMT = "SELECT * FROM GAMES g WHERE g.id = %s "
+        cursor.execute(getGameByIDSTMT, (id,))
+        tmp = cursor.fetchone()
+        game = {
+            "id":  tmp[0],
+            "game_name": tmp[1]
+        }
+
+        #Game list of leagues
+        getGamesLeaguesSTMT = "SELECT shorthand, name FROM LEAGUES l WHERE l.game_id = %s"
+        cursor.execute(getGamesLeaguesSTMT, (game['id'],))
+        leagues = [(league[0], league[1]) for league in cursor]
+        game["leagues"] = leagues
+
+        return game
 
