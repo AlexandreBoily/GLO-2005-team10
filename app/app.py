@@ -46,7 +46,8 @@ def teams():
 @application.route("/game/<id>", methods=["GET"])
 def game(id):
     global db
-    return render_template('game.html', id=id)
+    game = db.getGameByID(id)
+    return render_template('game.html', game=game)
 
 
 @application.route("/league/<id>", methods=["GET"])

@@ -29,7 +29,7 @@ class MySQLRepository:
         cursor = self.connector.cursor()
         getAllGamesSTMT = "SELECT * FROM GAMES"
         cursor.execute(getAllGamesSTMT)
-        games = [(game[0], game[1]) for game in cursor]
+        games = [(game[0], game[1].replace('"', '')) for game in cursor]
         return games
 
     def getGameByID(self, id):

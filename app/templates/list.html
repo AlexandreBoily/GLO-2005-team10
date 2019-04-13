@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>EsportsPedia</title>
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/skeleton.css') }}" rel="stylesheet"  />
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/normalize.css') }}" rel="stylesheet" />
 </head>
 <body>
     <h1>{{ pageName }}</h1>
-    {%  for item in items %}
-        {{item[1]}},
-    {% endfor %}
+    <form>
+        <ul>
+            {% for item in items %}
+                <li><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
+            {% endfor %}
+        </ul>
+    </form>
 </body>
 </html>
