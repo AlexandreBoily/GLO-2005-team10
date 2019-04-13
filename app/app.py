@@ -16,7 +16,7 @@ def index():
 @application.route("/games", methods=["GET"])
 def games():
     global db
-    games = db.getGames()
+    games = db.getAllGames()
     return render_template('list.html', items=games, pageName='Games')
 
 
