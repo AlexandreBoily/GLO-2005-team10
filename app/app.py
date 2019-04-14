@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from MySQLdb import MySQLRepository
 
 
@@ -18,30 +18,27 @@ def index():
 @application.route("/games", methods=["GET"])
 def games():
     global db
-
     games = db.getAll("GAMES")
     return render_template('list.html', items=games, pageName='Games')
 
 @application.route("/leagues", methods=["GET"])
 def leagues():
     global db
-
-    games = db.getAll("LEAGUES")
-    return render_template('list.html', items=games, pageName='Leagues')
+    leagues = db.getAll("LEAGUES")
+    return render_template('list.html', items=leagues, pageName='Leagues')
 
 @application.route("/players", methods=["GET"])
 def players():
     global db
-
-    games = db.getAll("PLAYERS")
-    return render_template('list.html', items=games, pageName='Players')
+    players = db.getAll("PLAYERS")
+    return render_template('list.html', items=players, pageName='Players')
 
 
 @application.route("/teams", methods=["GET"])
 def teams():
     global db
-    games = db.getAll("TEAMS")
-    return render_template('list.html', items=games, pageName='Teams')
+    teams = db.getAll("TEAMS")
+    return render_template('list.html', items=teams, pageName='Teams')
 
 
 @application.route("/game/<id>", methods=["GET"])
@@ -72,7 +69,12 @@ def team(id):
 @application.route("/create/<type>", methods=["GET", "POST"])
 def create(type):
     global db
-    return render_template('player.html', id=type)
+    if request.method == "POST":
+        # access form data with request.form, ie: request.form['alias']
+        # create new game then redirect to that game's page using it's id (instead of id=0)
+        return redirect(url_for('game', id=0))
+    type = type[:-1]
+    return render_template('create-form.html', type=type)
 
 
 if __name__ ==  "__main__":

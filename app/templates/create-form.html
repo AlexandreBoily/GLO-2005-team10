@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EsportsPedia</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link href="{{ url_for('static', filename='favicon-32x32.png') }}" rel="icon"/>
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/skeleton.css') }}" rel="stylesheet"  />
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/normalize.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<form>
+    <div class="row navbar">
+        <button type="submit" formaction="{{ url_for('index') }}" formmethod="get"><i class="material-icons">home</i></button>
+        <button type="submit" formaction="{{ url_for('games') }}" formmethod="get">Games</button>
+        <button type="submit" formaction="{{ url_for('leagues') }}" formmethod="get">Leagues</button>
+        <button type="submit" formaction="{{ url_for('players') }}" formmethod="get">Players</button>
+        <button type="submit" formaction="{{ url_for('teams') }}" formmethod="get">Teams</button>
+    </div>
+</form>
+
+<div class="content landing">
+    <form class="create-form">
+        <h5>New {{ type }}</h5>
+        <div class="row">
+            <div class="six columns">
+                <label for="first-name">First Name</label>
+                <input name="first-name" id="first-name" class="u-full-width" maxlength="24" placeholder="John" required/>
+            </div>
+            <div class="six columns">
+                <label for="last-name">Last Name</label>
+                <input name="last-name" id="last-name" class="u-full-width" maxlength="24" placeholder="Doe" required/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <label for="alias">Alias</label>
+                <input name="alias" id="alias" class="u-full-width" maxlength="24" placeholder="Player One" required/>
+            </div>
+            <div class="six columns">
+                <label for="nationality">Nationality</label>
+                <input name="nationality" id="nationality" class="u-full-width" maxlength="24" placeholder="Canadian" required/>
+            </div>
+        </div>
+        <div class="row">
+            <button type="submit" formaction="{{ url_for('create', type=type+'s') }}" formmethod="post" class="button-primary">Create</button>
+        </div>
+    </form>
+</div>
+
+<div class="footer">
+    <p>Created with passion by <span>TEAM 10</span> for GLO-2005</p>
+</div>
+</body>
+</html>
