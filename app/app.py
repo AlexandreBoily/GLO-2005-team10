@@ -69,5 +69,11 @@ def team(id):
     return render_template('team.html', id=id)
 
 
+@application.route("/create/<type>", methods=["GET", "POST"])
+def create(type):
+    global db
+    return render_template('player.html', id=type)
+
+
 if __name__ ==  "__main__":
     application.run(host="0.0.0.0", port=8080, debug=True)

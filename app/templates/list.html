@@ -3,35 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>EsportsPedia</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link href="{{ url_for('static', filename='favicon-32x32.png') }}" rel="icon"/>
     <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/skeleton.css') }}" rel="stylesheet"  />
     <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/normalize.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <form>
-    <ul>
-        <li><button type="submit" formaction="{{ url_for('games') }}" formmethod="get" {% if pageName == "Games" %}
-            disabled
-        {% endif %}>Games</button></li>
-        <li><button type="submit" formaction="{{ url_for('leagues') }}" formmethod="get" {% if pageName == "Leagues" %}
-            disabled
-        {% endif %}>Leagues</button></li>
-        <li><button type="submit" formaction="{{ url_for('players') }}" formmethod="get" {% if pageName == "Players" %}
-            disabled
-        {% endif %}>Players</button></li>
-        <li><button type="submit" formaction="{{ url_for('teams') }}" formmethod="get" {% if pageName == "Teams" %}
-            disabled
-        {% endif %}>Teams</button></li>
-    </ul>
+    <div class="row navbar">
+        <button type="submit" formaction="{{ url_for('index') }}" formmethod="get"><i class="material-icons">home</i></button>
+        <button {% if pageName == "Games" %}class="active"{% endif %} type="submit" formaction="{{ url_for('games') }}" formmethod="get">Games</button>
+        <button {% if pageName == "Leagues" %}class="active"{% endif %} type="submit" formaction="{{ url_for('leagues') }}" formmethod="get">Leagues</button>
+        <button {% if pageName == "Players" %}class="active"{% endif %} type="submit" formaction="{{ url_for('players') }}" formmethod="get">Players</button>
+        <button {% if pageName == "Teams" %}class="active"{% endif %} type="submit" formaction="{{ url_for('teams') }}" formmethod="get">Teams</button>
+    </div>
 </form>
-    <h1>{{ pageName }}</h1>
+
+<div class="content">
+        <div class="content-header">
+            <h1>{{ pageName }}</h1>
+            <form><button formaction="{{ url_for('create', type=pageName) }}" formmethod="get">Create</button></form>
+        </div>
+
     <form>
-        <ul>
-        {% if items != None %}
-            {% for item in items %}
-                <li><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
-            {% endfor %}
-        {% endif %}
+        <ul class="list">
+            {% if items != None %}
+                {% for item in items %}
+                    <li><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
+                {% endfor %}
+            {% endif %}
         </ul>
     </form>
+</div>
+
+<div class="footer">
+    <p>Created with passion by <span>TEAM 10</span> for GLO-2005</p>
+</div>
 </body>
 </html>
