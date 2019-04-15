@@ -24,6 +24,7 @@
 <div class="content">
         <div class="content-header">
             <h1>{{ pageName }}</h1>
+            <input id="filter-input" type="text" placeholder="Search"/>
             <form><button formaction="{{ url_for('create', type=pageName) }}" formmethod="get">Create</button></form>
         </div>
 
@@ -31,7 +32,7 @@
         <ul class="list">
             {% if items != None %}
                 {% for item in items %}
-                    <li><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
+                    <li id="{{ item[1] }}"><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
                 {% endfor %}
             {% endif %}
         </ul>
@@ -42,4 +43,13 @@
     <p>Created with passion by <span>TEAM 10</span> for GLO-2005</p>
 </div>
 </body>
+<script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script type="module">
+    import {filterList, setItemList} from "{{ url_for('static', filename='js/script.js') }}";
+
+    {% if items != None %}
+        setItemList({{ items|safe }});
+        filterList('');
+    {% endif %}
+</script>
 </html>

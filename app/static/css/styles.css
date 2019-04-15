@@ -106,6 +106,10 @@ div.footer p span {
     color: #33C3F0;
 }
 
+input#filter-input {
+    margin-top: 18px;
+}
+
 ul.list {
     padding-right: 12px;
     width: calc(100% - 12px);
