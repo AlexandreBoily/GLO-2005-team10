@@ -113,7 +113,7 @@ class selector:
     @classmethod
     def getPlayerByID(cls, cursor, id):
 
-        getPlayerByIDSTMT = "SELECT * FROM PLAYERS WHERE id = $s"
+        getPlayerByIDSTMT = "SELECT * FROM PLAYERS WHERE id = %s"
         getNationalitySTMT = "SELECT Nationality FROM settingsNationalities WHERE NationalityID = %s"
         getTeamsSTMT = "SELECT t.id, t.name, l.start, l.end FROM TEAMS t INNER JOIN (SELECT * FROM PLAYERS_TEAMS WHERE player_id = %s) l on l.team_id = t.id"
 
