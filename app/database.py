@@ -28,14 +28,12 @@ class MySQLRepository:
 
     def getAll(self, table_name):
         self.__verify_connection()
-        tb = table_name
-        all = selector.getAll(self.connector.cursor(), tb)
-        return all
+        return selector.getAll(self.connector.cursor(), table_name)
 
     def getGameByID(self, id):
         self.__verify_connection()
-        cursor = self.connector.cursor()
-        return selector.getGameByID(cursor, id)
+        game = selector.getGameByID(self.connector.cursor(), id)
+        return game
 
     def getLeagueByID(self, id):
         self.__verify_connection()

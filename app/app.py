@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from flask import Flask, render_template, request, redirect, url_for
-from MySQLdb import MySQLRepository
+from database import MySQLRepository
 
 
 application = Flask(__name__)
