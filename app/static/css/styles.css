@@ -202,6 +202,7 @@ div.content div.content-body div.content-info-panel {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    max-height: 600px;
 }
 
 div.content div.content-body div.content-info-panel p {
