@@ -12,9 +12,9 @@ class insertor:
         except (MySQLdb.Error, MySQLdb.Warning) as e:
             print(e)
             cursor.rollback()
-        finally:
-            i
+
 
     @classmethod
     def createNewTeam(cls, cursor, game):
+        return ""
 
