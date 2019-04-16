@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS EsportsWiki;
 USE EsportsWiki;
 
 CREATE TABLE IF NOT EXISTS GAMES(
-    id smallint,
+    id smallint auto_increment,
     game_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS LEAGUES(
 );
 
 CREATE TABLE IF NOT EXISTS RULES(
-    id smallint,
+    id smallint auto_increment,
     name VARCHAR(50) NOT NULL ,
     description TEXT,
     no_teams_per_match SMALLINT NOT NULL ,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS RULES(
 );
 
 CREATE TABLE IF NOT EXISTS TEAMS(
-    id SMALLINT,
+    id SMALLINT auto_increment,
     name VARCHAR(50) NOT NULL,
     organization_id VARCHAR(50) REFERENCES ORGANIZATION(id)
         ON UPDATE CASCADE
@@ -46,18 +46,20 @@ CREATE TABLE IF NOT EXISTS TEAMS(
 );
 
 CREATE TABLE IF NOT EXISTS ORGANIZATION(
-    id smallint,
-    name VARCHAR(50),
-    logo VARCHAR(200),
+    id smallint auto_increment,
+    name VARCHAR(50) NOT NULL,
+    logo VARCHAR(200) DEFAULT 'http://lorempixel/800/600',
     PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS PLAYERS(
-    id SMALLINT NOT NULL,
+    id SMALLINT auto_increment,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     alias VARCHAR(50) NOT NULL ,
-    nationality SMALLINT,
+    nationality SMALLINT REFERENCES settingsNationalities(NationalityID)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
     team_id smallint,
     PRIMARY KEY (id)
 );
@@ -127,7 +129,8 @@ INSERT INTO settingsNationalities VALUES (1,'Afghan'),(2,'Albanian'),(3,'Algeria
 LOAD DATA INFILE '/var/lib/mysql-files/games_data.csv' INTO TABLE GAMES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (game_name);
 
 LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.csv' INTO TABLE LEAGUES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
@@ -137,22 +140,26 @@ LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.csv' INTO TABLE LEAGUES
 LOAD DATA INFILE '/var/lib/mysql-files/players_data.csv' INTO TABLE PLAYERS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (first_name,last_name,alias,nationality,team_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/rules_data.csv' INTO TABLE RULES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,description,no_teams_per_match,no_players_per_teams,game_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/organization_data.csv' INTO TABLE ORGANIZATION
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,logo);
 
 LOAD DATA INFILE '/var/lib/mysql-files/teams_data.csv' INTO TABLE TEAMS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,organization_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/players_team_data.csv' INTO TABLE PLAYERS_TEAMS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
