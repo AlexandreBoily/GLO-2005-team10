@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from mysql.connector import connect
+from selector import selector
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -24,42 +25,26 @@ class MySQLRepository:
         if self.connector is None:
             self.__connect()
 
-    def __prepareGetAllSTMT(self, table_name):
-        switch = {
-            "LEAGUES": ("shorthand", "name"),
-            "GAMES": ("id", "game_name"),
-            "PLAYERS": ("id", "alias"),
-            "TEAMS": ("id", "name")
-        }
-        fields = switch.get(table_name, "error")
-        return "SELECT {}, {} FROM {}".format(fields[0], fields[1], table_name)
-
     def getAll(self, table_name):
         self.__verify_connection()
-        cursor = self.connector.cursor()
-        tuples = self.__prepareGetAllSTMT(table_name)
-        cursor.execute(self.__prepareGetAllSTMT(table_name))
-        games = [(game[0], game[1].replace('"', '')) for game in cursor]
-        return games
+        tb = table_name
+        all = selector.getAll(self.connector.cursor(), tb)
+        return all
 
     def getGameByID(self, id):
         self.__verify_connection()
         cursor = self.connector.cursor()
+        return selector.getGameByID(cursor, id)
 
-        #Get game name and id
-        getGameByIDSTMT = "SELECT * FROM GAMES g WHERE g.id = %s "
-        cursor.execute(getGameByIDSTMT, (id,))
-        tmp = cursor.fetchone()
-        game = {
-            "id":  tmp[0],
-            "game_name": tmp[1].replace('"', '')
-        }
+    def getLeaguebyID(self, id):
+        self.__verify_connection()
+        cursor = self.connector.cursor()
+        return selector.getLeagueByID(cursor, id)
 
-        #Game list of leagues
-        getGamesLeaguesSTMT = "SELECT shorthand, name FROM LEAGUES l WHERE l.game_id = %s"
-        cursor.execute(getGamesLeaguesSTMT, (game['id'],))
-        leagues = [(league[0], league[1]) for league in cursor]
-        game["leagues"] = leagues
+    def getTeamByID(self, id):
+        self.__verify_connection()
+        cursor = self.connector.cursor()
+        return selector.getTeamByID(cursor, id)
 
-        return game
+
 
