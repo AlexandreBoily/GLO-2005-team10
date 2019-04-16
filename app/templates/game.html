@@ -22,7 +22,22 @@
 </form>
 
 <div class="content">
-    {{ game['game_name'] }}
+    <div class="content">
+    <div class="content-title">
+        <h3>{{ game['game_name'] }}</h3>
+    </div>
+    <div class="content-body">
+        <div class="content-description">
+            <h5>Esports league for this game</h5>
+            <form>
+                <ul class="list">
+                    {% for league in game['leagues'] %}
+                        <li><button formaction="{{ url_for('league', id=league["shorthand"]) }}" formmethod="get">{{ league["name"] }}</button></li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </div>
 </div>
 
 <div class="footer">
