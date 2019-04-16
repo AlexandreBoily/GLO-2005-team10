@@ -24,8 +24,11 @@
 
 <div class="content">
     <form>
+        <h3>Teams</h3>
         <ul class="list">
-
+            {% for team in organization['teams'] %}
+                <li><button formaction="{{ url_for('team', id=team['id']) }}" formmethod="get">{{ team["name"] }}</button></li>
+            {% endfor %}
         </ul>
     </form>
 </div>

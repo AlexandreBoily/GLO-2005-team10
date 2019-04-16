@@ -141,6 +141,7 @@ class selector:
     def getOrganizationByID(cls, cursor, id):
 
         getOrgaByID = "SELECT * FROM ORGANIZATION WHERE id = %s"
+        getTeamByOrgaID = "SELECT id, name FROM TEAMS WHERE organization_id = %s"
 
         cursor.execute(getOrgaByID, (id,))
         tmp = cursor.fetchone()
@@ -149,5 +150,9 @@ class selector:
             "name": tmp[1],
             "logo": tmp[2]
         }
+
+        cursor.execute(getTeamByOrgaID, (id,))
+        teams = [{"id": team[0], "name": team[1]}for team in cursor]
+        organization["teams"] = teams
 
         return organization
