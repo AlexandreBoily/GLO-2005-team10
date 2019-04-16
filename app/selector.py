@@ -81,7 +81,7 @@ class selector:
     def getTeamByID(cls, cursor, id):
 
         getTeamByIDSTMT = "SELECT id, name FROM TEAMS WHERE id = %s"
-        getOrganizationSTMT = "SELECT o.name FROM ORGANIZATION o INNER JOIN (SELECT organization_id FROM TEAMS WHERE id = %s) l ON l.organization_id = o. id"
+        getOrganizationSTMT = "SELECT o.name FROM ORGANIZATION o INNER JOIN (SELECT organization_id FROM TEAMS WHERE id = %s) l ON l.organization_id = o.id"
         getLeaguesSTMT = "SELECT t.shorthand, t.name, l.result FROM LEAGUES t INNER JOIN (SELECT * FROM TEAMS_LEAGUES WHERE team_id = %s) l ON l.league_id = t.shorthand "
         getPlayersSTMT = "SELECT p.id, p.alias, t.start, t.end FROM PLAYERS p INNER JOIN (SELECT * FROM PLAYER_TEAMS WHERE team_id = %s) t ON t.player_id = p.id "
 
