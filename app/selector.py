@@ -6,7 +6,8 @@ class selector:
             "LEAGUES": ("shorthand", "name"),
             "GAMES": ("id", "game_name"),
             "PLAYERS": ("id", "alias"),
-            "TEAMS": ("id", "name")
+            "TEAMS": ("id", "name"),
+            "ORGANIZATION": ("id", "name"),
         }
         fields = switch.get(table_name, "error")
         return "SELECT {}, {} FROM {}".format(fields[0], fields[1], table_name)
@@ -135,3 +136,18 @@ class selector:
         player["teams"] = teams
 
         return player
+
+    @classmethod
+    def getOrganizationByID(cls, cursor, id):
+
+        getOrgaByID = "SELECT * FROM ORGANIZATION WHERE id = %s"
+
+        cursor.execute(getOrgaByID, (id,))
+        tmp = cursor.fetchone()
+        organization = {
+            "id": tmp[0],
+            "name": tmp[1],
+            "logo": tmp[2]
+        }
+
+        return organization

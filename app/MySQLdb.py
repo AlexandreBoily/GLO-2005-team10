@@ -50,5 +50,6 @@ class MySQLRepository:
         self.__verify_connection()
         return selector.getPlayerByID(self.connector.cursor(), id)
 
-
-
+    def getOrganizationByID(self, id):
+        self.__verify_connection()
+        return selector.getOrganizationByID(self.connector.cursor(), id)
