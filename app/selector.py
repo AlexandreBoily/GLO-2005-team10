@@ -94,7 +94,7 @@ class selector:
         }
 
         #Get org name
-        cursor.execute(getOrganizationSTMT)
+        cursor.execute(getOrganizationSTMT, (id,))
         tmp = cursor.fetchone()
         team["org_name"] = tmp[0]
 
