@@ -40,8 +40,11 @@ class selector:
     @classmethod
     def getLeagueByID(cls, cursor, id):
 
-        # Get game ID and shorthand
         getLeagueByIDSTMT = "SELECT * FROM LEAGUES l where l.shorthand = %s"
+        getRuleSTMT = "SELECT * FROM RULES WHERE id = %s"
+        getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN (SELECT * FROM TEAM_LEAGUES WHERE league_id = %s) l ON l.team_id = t.id "
+
+        # Get game ID and shorthand
         cursor.execute(getLeagueByIDSTMT, (id,))
         tmp = cursor.fetchone()
         league = {
@@ -55,7 +58,6 @@ class selector:
         }
 
         # Get rules
-        getRuleSTMT = "SELECT * FROM RULES WHERE id = %s"
         cursor.execute(getRuleSTMT, (tmp[8],))
         tmp = cursor.fetchone()
         rule = {
@@ -78,7 +80,32 @@ class selector:
     @classmethod
     def getTeamByID(cls, cursor, id):
 
-        # Get name, organization
         getTeamByIDSTMT = "SELECT id, name FROM TEAMS WHERE id = %s"
         getOrganizationSTMT = "SELECT o.name FROM ORGANIZATION o INNER JOIN TEAMS t on t.organization_id = o.id"
-        getLeaguesSTMT = "SELECT t.shorthand, name"
+        getLeaguesSTMT = "SELECT t.shorthand, t.name, l.result FROM LEAGUES t INNER JOIN (SELECT * FROM TEAMS_LEAGUES WHERE team_id = %s) l ON l.league_id = t.shorthand "
+        getPlayersSTMT = "SELECT p.id, p.alias, t.start, t.end FROM PLAYERS p INNER JOIN (SELECT * FROM PLAYER_TEAMS WHERE team_id = %s) t ON t.player_id = p.id "
+
+        #Get team id and name
+        cursor.execute(getTeamByIDSTMT, (id,))
+        tmp = cursor.fetchone()
+        team = {
+            "id": tmp[0],
+            "name": tmp[1]
+        }
+
+        #Get org name
+        cursor.execute(getOrganizationSTMT)
+        tmp = cursor.fetchone()
+        team["org_name"] = tmp[0]
+
+        #Get Leagues in which the team participates
+        cursor.execute(getLeaguesSTMT, (id,))
+        leagues = [{"shorthand": league[0], "name": league[1], "result": league[2]} for league in cursor]
+        team["leagues"] = leagues
+
+        #Get Players
+        cursor.execute(getPlayersSTMT, (id,))
+        players = [{"id": player[0], "alias": player[1], "start": player[2], "end": player[3]} for player in cursor]
+        team["players"] = players
+
+        return team
