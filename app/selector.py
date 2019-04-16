@@ -42,7 +42,7 @@ class selector:
 
         getLeagueByIDSTMT = "SELECT * FROM LEAGUES l where l.shorthand = %s"
         getRuleSTMT = "SELECT * FROM RULES WHERE id = %s"
-        getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN TEAMS_LEAGUES l "
+        getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN (SELECT * FROM TEAM_LEAGUES WHERE league_id = %s) l ON l.team_id = t.id "
 
         # Get game ID and shorthand
         cursor.execute(getLeagueByIDSTMT, (id,))
@@ -81,8 +81,8 @@ class selector:
 
         getTeamByIDSTMT = "SELECT id, name FROM TEAMS WHERE id = %s"
         getOrganizationSTMT = "SELECT o.name FROM ORGANIZATION o INNER JOIN TEAMS t on t.organization_id = o.id"
-        getLeaguesSTMT = "SELECT t.shorthand, t.name, l.result FROM LEAGUES t INNER JOIN TEAMS_LEAGUES l ON l.league_id = t.shorthand WHERE l.team_id = %s"
-        getPlayersSTMT = "SELECT p.id, p.alias, t.start, t.end FROM PLAYERS p INNER JOIN PLAYER_TEAMS t ON t.player_id = p.id WHERE t.team_id = %s"
+        getLeaguesSTMT = "SELECT t.shorthand, t.name, l.result FROM LEAGUES t INNER JOIN (SELECT * FROM TEAMS_LEAGUES WHERE team_id = %s) l ON l.league_id = t.shorthand "
+        getPlayersSTMT = "SELECT p.id, p.alias, t.start, t.end FROM PLAYERS p INNER JOIN (SELECT * FROM PLAYER_TEAMS WHERE team_id = %s) t ON t.player_id = p.id "
 
         #Get team id and name
         cursor.execute(getTeamByIDSTMT, (id,))
