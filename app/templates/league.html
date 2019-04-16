@@ -30,9 +30,8 @@
     <p>Online: {{ league['online'] }}</p>
     <p>Game: {{ game['game_name'] }}</p>
     <p>Rule: {{ league['rule']['name'] }}</p>
-    <p> {{ league['teams'] }}</p>
     {% for team in league['teams'] %}
-        <p>Team: {{ team }}</p>
+        <p>Team: {{ team["name"] }}</p>
     {% endfor %}
 </div>
 

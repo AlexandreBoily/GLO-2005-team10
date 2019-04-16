@@ -68,7 +68,7 @@ class selector:
         league["rule"] = rule
 
         # Get teams participating in this league
-        getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN TEAMS_LEAGUES l ON l.team_id = t.id AND l.league_id = %s"
+        getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN (SELECT * FROM TEAMS_LEAGUES WHERE league_id = %s) l on t.id = l.team_id"
         cursor.execute(getTeamsSTMT, (id,))
         teams = [{"id": team[0], "name": team[1], "result": team[2]} for team in cursor]
         league["teams"] = teams
