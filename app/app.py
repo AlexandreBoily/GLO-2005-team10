@@ -40,6 +40,12 @@ def teams():
     teams = db.getAll("TEAMS")
     return render_template('list.html', items=teams, pageName='Teams', itemType='team')
 
+@application.route("/organizations", methods=["GET"])
+def organizations():
+    global db
+    organizations = db.getAll("ORGANIZATION")
+    return render_template('list.html', items=organizations, pageName='Organizations', itemType='organization')
+
 
 @application.route("/game/<id>", methods=["GET"])
 def game(id):
@@ -66,9 +72,13 @@ def player(id):
 @application.route("/team/<id>", methods=["GET"])
 def team(id):
     global db
-    team = db.getTeamByID(id)
-    return render_template('team.html', team=team)
+    return render_template('team.html', id=id)
 
+@application.route("/organization/<id>", methods=["GET"])
+def organization(id):
+    global db
+    organization = db.getOrganizationByID(id)
+    return render_template('organization.html', organization=organization)
 
 @application.route("/create/<type>", methods=["GET", "POST"])
 def create(type):
@@ -76,7 +86,7 @@ def create(type):
     if request.method == "POST":
         # access form data with request.form, ie: request.form['alias']
         # create new game then redirect to that game's page using it's id (instead of id=0)
-        return redirect(url_for('game', id=0))
+        return redirect(url_for('team', id=request.form['first-name']))
     type = type[:-1]
     return render_template('create-form.html', type=type)
 
