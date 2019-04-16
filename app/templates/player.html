@@ -22,7 +22,27 @@
 </form>
 
 <div class="content">
-    {{ id }}
+    <div class="content-title">
+        <h3>{{ player['alias'] }}</h3>
+    </div>
+    <div class="content-body">
+        <div class="content-description">
+            <h5>Teams</h5>
+            <form>
+                <ul class="list">
+                    {% for team in player['teams'] %}
+                        <li><button formaction="{{ url_for('team', id=team['id']) }}" formmethod="get">{{ team["name"] }}</button></li>
+                    {% endfor %}
+                </ul>
+            </form>
+
+        </div>
+        <div class="content-info-panel">
+            <h5>Information</h5>
+            <p><span>First Name:</span> {{ player['first_name'] }}</p>
+            <p><span>Last Name:</span> {{ player['last_name'] }}</p>
+            <p><span>Nationality:</span> {{ player['nationality'] }}</p>
+        </div>
 </div>
 
 <div class="footer">

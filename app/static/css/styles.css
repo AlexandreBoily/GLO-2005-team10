@@ -133,7 +133,7 @@ ul.list li:hover {
 
 ul.list li button {
     border: none;
-    width: 98%;
+    width: 96%;
     text-align: left;
 }
 
@@ -203,6 +203,7 @@ div.content div.content-body div.content-info-panel {
     flex-direction: column;
     justify-content: space-evenly;
     max-height: 600px;
+    min-height: 500px;
 }
 
 div.content div.content-body div.content-info-panel p {

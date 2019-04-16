@@ -37,7 +37,7 @@
             <form>
                 <ul class="list">
                     {% for team in league['teams'] %}
-                        <li><button formaction="{{ url_for('team', id=team['id']) }}" formmethod="get">{{ team["name"] }}</button></li>
+                        <li><button formaction="{{ url_for('team', id=team['id']) }}" formmethod="get">{{ team["name"] }}</button> {{ team['result'] }}</li>
                     {% endfor %}
                 </ul>
             </form>
