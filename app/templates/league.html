@@ -22,7 +22,17 @@
 </form>
 
 <div class="content">
-    {{ id }}
+    <p>Name: {{ league['name'] }}</p>
+    <p>Max number of teams: {{ league['max_no_teams'] }}</p>
+    <p>Description: {{ league['description'] }}</p>
+    <p>Region: {{ league['region'] }}</p>
+    <p>Prize pool: {{ league['prize_pool'] }}</p>
+    <p>Online: {{ league['online'] }}</p>
+    <p>Game: {{ game['game_name'] }}</p>
+    <p>Rule: {{ league['rule']['name'] }}</p>
+    {% for team in league['teams'] %}
+        <p>Team: {{ team["name"] }}</p>
+    {% endfor %}
 </div>
 
 <div class="footer">

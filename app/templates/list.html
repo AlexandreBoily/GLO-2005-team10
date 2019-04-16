@@ -32,7 +32,7 @@
         <ul class="list">
             {% if items != None %}
                 {% for item in items %}
-                    <li id="{{ item[1] }}"><button formaction="{{ url_for('game', id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
+                    <li id="{{ item[1] }}"><button formaction="{{ url_for(itemType, id=item[0]) }}" formmethod="get">{{item[1]}}</button></li>
                 {% endfor %}
             {% endif %}
         </ul>
