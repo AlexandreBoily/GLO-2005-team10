@@ -22,17 +22,38 @@
 </form>
 
 <div class="content">
-    <p>Name: {{ league['name'] }}</p>
-    <p>Max number of teams: {{ league['max_no_teams'] }}</p>
-    <p>Description: {{ league['description'] }}</p>
-    <p>Region: {{ league['region'] }}</p>
-    <p>Prize pool: {{ league['prize_pool'] }}</p>
-    <p>Online: {{ league['online'] }}</p>
-    <p>Game: {{ game['game_name'] }}</p>
-    <p>Rule: {{ league['rule']['name'] }}</p>
-    {% for team in league['teams'] %}
-        <p>Team: {{ team["name"] }}</p>
-    {% endfor %}
+    <div class="content-title">
+        <h3>{{ league['name'] }}</h3>
+    </div>
+    <div class="content-body">
+        <div class="content-description">
+            <h5>Description</h5>
+            <p>{{ league['description'] }}</p>
+            <h5>Rules</h5>
+            <p>{{ league['rule']['name'] }}</p>
+            <p><span>Number of teams per match: </span>{{ league['rule']['no_teams_per_match'] }}</p>
+            <p><span>Number players per team: </span>{{ league['rule']['no_players_per_teams'] }}</p>
+            <h5>Participating Teams</h5>
+            <form>
+                <ul class="list">
+                    {% for team in league['teams'] %}
+                        <li><button formaction="{{ url_for('team', id=team['id']) }}" formmethod="get">{{ team["name"] }}</button></li>
+                    {% endfor %}
+                </ul>
+            </form>
+
+        </div>
+        <div class="content-info-panel">
+            <h5>Information</h5>
+            <p class="row-highlight"><span>Max number of teams:</span> {{ league['max_no_teams'] }}</p>
+            <p><span>Region:</span> {{ league['region'] }}</p>
+            <p class="row-highlight"><span>Prize pool:</span> {{ league['prize_pool'] }}</p>
+            <p><span>Online:</span> {{ league['online'] }}</p>
+            <p class="row-highlight"><span>Game:</span> {{ game['game_name'] }}</p>
+        </div>
+    </div>
+
+
 </div>
 
 <div class="footer">

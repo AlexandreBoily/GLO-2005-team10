@@ -2,7 +2,7 @@ let list = [];
 let filteredList = [];
 
 const filterList = function(query) {
-    filteredList = list.filter(item => item.includes(query));
+    filteredList = list.filter(item => item.toLowerCase().includes(query.toLowerCase()));
     list.forEach(item => {
         document.getElementById(item).hidden = !filteredList.includes(item);
     })
