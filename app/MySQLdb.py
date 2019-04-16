@@ -36,7 +36,7 @@ class MySQLRepository:
         cursor = self.connector.cursor()
         return selector.getGameByID(cursor, id)
 
-    def getLeaguebyID(self, id):
+    def getLeagueByID(self, id):
         self.__verify_connection()
         cursor = self.connector.cursor()
         return selector.getLeagueByID(cursor, id)
