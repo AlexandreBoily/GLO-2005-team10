@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from mysql.connector import connect
 from selector import selector
+from insertor import insertor
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -49,6 +50,10 @@ class MySQLRepository:
     def getPlayerByID(self, id):
         self.__verify_connection()
         return selector.getPlayerByID(self.connector.cursor(), id)
+
+    def createNewGame(self, game):
+        self.__verify_connection()
+        insertor.createNewGame(self.connector.cursor(), game)
 
 
 
