@@ -109,3 +109,29 @@ class selector:
         team["players"] = players
 
         return team
+
+    @classmethod
+    def getPlayerByID(cls, cursor, id):
+
+        getPlayerByIDSTMT = "SELECT * FROM PLAYERS WHERE id = $s"
+        getNationalitySTMT = "SELECT Nationality FROM settingsNationalities WHERE NationalityID = %s"
+        getTeamsSTMT = "SELECT t.id, t.name, l.start, l.end FROM TEAMS t INNER JOIN (SELECT * FROM PLAYERS_TEAMS WHERE player_id = %s) l on l.team_id = t.id"
+
+        cursor.execute(getPlayerByIDSTMT, (id,))
+        tmp = cursor.fetchone()
+        player = {
+            "id": tmp[0],
+            "first_name": tmp[1],
+            "last_name": tmp[2],
+            "alias": tmp[3],
+        }
+
+        cursor.execute(getNationalitySTMT, (tmp[4],))
+        tmp = cursor.fetchone()
+        player["nationality"] = tmp[0]
+
+        cursor.execute(getTeamsSTMT, (id,))
+        teams = [{"id": team[0], "name": team[1], "start": team[2], "end": team[3]}for team in cursor]
+        player["teams"] = teams
+
+        return player
