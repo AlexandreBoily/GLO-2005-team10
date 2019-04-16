@@ -26,26 +26,71 @@
 <div class="content landing">
     <form class="create-form">
         <h5>New {{ type }}</h5>
-        <div class="row">
-            <div class="six columns">
-                <label for="first-name">First Name</label>
-                <input name="first-name" id="first-name" class="u-full-width" maxlength="24" placeholder="John" required/>
+        {% if type == "Player" %}
+            <div class="row">
+                <div class="six columns">
+                    <label for="first-name">First Name</label>
+                    <input name="first-name" id="first-name" class="u-full-width" maxlength="24" placeholder="John" required/>
+                </div>
+                <div class="six columns">
+                    <label for="last-name">Last Name</label>
+                    <input name="last-name" id="last-name" class="u-full-width" maxlength="24" placeholder="Doe" required/>
+                </div>
             </div>
-            <div class="six columns">
-                <label for="last-name">Last Name</label>
-                <input name="last-name" id="last-name" class="u-full-width" maxlength="24" placeholder="Doe" required/>
+            <div class="row">
+                <div class="six columns">
+                    <label for="alias">Alias</label>
+                    <input name="alias" id="alias" class="u-full-width" maxlength="24" placeholder="Player One" required/>
+                </div>
+                <div class="six columns">
+                    <label for="nationality">Nationality</label>
+                    <input name="nationality" id="nationality" class="u-full-width" maxlength="24" placeholder="Canadian" required/>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="six columns">
-                <label for="alias">Alias</label>
-                <input name="alias" id="alias" class="u-full-width" maxlength="24" placeholder="Player One" required/>
+        {% elif type == "Game" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Game" required/>
+                </div>
             </div>
-            <div class="six columns">
-                <label for="nationality">Nationality</label>
-                <input name="nationality" id="nationality" class="u-full-width" maxlength="24" placeholder="Canadian" required/>
+        {% elif type == "League" %}
+            <div class="row">
+                <div class="six columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The League" required/>
+                </div>
+                <div class="three columns">
+                    <label for="shorthand">Shorthand</label>
+                    <input name="shorthand" id="shorthand" class="u-full-width" maxlength="12" placeholder="SHRTHD" required/>
+                </div>
+                <div class="three columns">
+                    <label for="region">Region</label>
+                    <input name="region" id="region" class="u-full-width" maxlength="10" placeholder="EU" required/>
+                </div>
             </div>
-        </div>
+            <div class="row">
+                <div class="four columns">
+                    <label for="max-no-teams">Max Number of teams</label>
+                    <input name="max-no-teams" id="max-no-teams" class="u-full-width" type="number" min="2" max="64" required/>
+                </div>
+                <div class="four columns" columns">
+                    <label for="prize-pool">Prize Pool</label>
+                    <input name="prize-pool" id="prize-pool" class="u-full-width" max="1000000000" min="0" type="number" required/>
+                </div>
+                <div class="four columns">
+                    <label for="online">Online</label>
+                    <input name="online" id="online" class="u-full-width" max="1" min="0" type="number" required/>
+                </div>
+            </div>
+        {% elif type == "Team" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Team" required/>
+                </div>
+            </div>
+        {% endif %}
         <div class="row">
             <button type="submit" formaction="{{ url_for('create', type=type+'s') }}" formmethod="post" class="button-primary">Create</button>
         </div>
