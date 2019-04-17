@@ -1,4 +1,4 @@
-import MySQLdb
+import mysql.connector
 
 class insertor:
 
@@ -7,7 +7,7 @@ class insertor:
         try:
             cursor.execute(STMT, tuple)
             cursor.commit()
-        except (MySQLdb.Error, MySQLdb.Warning) as e:
+        except (mysql.connector.Error, mysql.connector.Warning) as e:
             print(e)
             cursor.rollback()
 

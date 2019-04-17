@@ -85,9 +85,13 @@ def organization(id):
 def create(type):
     global db
     if request.method == "POST":
-        # access form data with request.form, ie: request.form['alias']
-        # create new game then redirect to that game's page using it's id (instead of id=0)
-        return redirect(url_for('team', id=request.form['first-name']))
+        if type == "Games":
+            id = db.createNewGame({
+                "game_name": request.form["name"],
+            })
+            return redirect(url_for('game', id=id))
+        else:
+            return "Mes Couilles"
     type = type[:-1]
     return render_template('create-form.html', type=type)
 
