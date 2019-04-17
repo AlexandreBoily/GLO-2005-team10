@@ -53,6 +53,19 @@
                 </ul>
             </form>
         </div>
+        <div class="content-right">
+            <div class="content-actions">
+                <form>
+                    <label for="player">Add Players</label>
+                    <select name="player" id="player">
+                        {% for player in players %}
+                            <option value="{{ player[0] }}">{{ player[1] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button formaction="{{ url_for('team', id=team['id']) }}" formmethod="post">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
