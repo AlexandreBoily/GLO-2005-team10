@@ -65,3 +65,5 @@ class insertor:
         tuple = (rule["name"], rule["description"], rule["no_teams_per_match"], rule["no_players_per_team"])
         return cls.__insert(cursor, insertSTMT, tuple)
 
+
+

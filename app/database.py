@@ -5,6 +5,7 @@ from selector import selector
 from insertor import insertor
 from updater import updater
 from deletor import deletor
+from linker import linker
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -100,3 +101,11 @@ class MySQLRepository:
     def delete(self, table, id):
         self.__verify_connection()
         return self.__commit(deletor.delete_prep(self.connector.cursor(), table, id))
+
+    def linkPlayerTeam(self, player_id, team_id, **kwargs):
+        self.__verify_connection()
+        return self.__commit(linker.linkPlayerTeams(self.connector.cursor(), player_id, team_id, **kwargs))
+
+    def linkTeamLeague(self, team_id, league_id, **kwargs):
+        self.__verify_connection()
+        return self.__commit(linker.linkTeamLeague(self.connector.cursor(), team_id, league_id, **kwargs))

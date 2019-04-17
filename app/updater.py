@@ -37,8 +37,8 @@ class updater:
                                 "description",
                                 "region",
                                 "prize_pool",
-                                 "online",
-                                 "shorthand"
+                                "online",
+                                "shorthand"
                                 ),
                       "id": "shorthand"},
             "RULES": {"STMT": "UPDATE RULES SET name = %s, description = %s, no_teams_per_match = %s, no_players_per_teams = %s WHERE id = %s",
