@@ -61,8 +61,8 @@
                     <p><span>Game:</span> {{ game['game_name'] }}</p>
                 {% endif %}
             </div>
-            {% if league['teams']|length < league['max_no_teams']|int %}
-                <div class="content-actions">
+            <div class="content-actions">
+                {% if league['teams']|length < league['max_no_teams']|int %}
                     <form>
                         <label for="team">Add Teams</label>
                         <select name="team" id="team">
@@ -72,8 +72,19 @@
                         </select>
                         <button formaction="{{ url_for('league', id=league['shorthand']) }}" formmethod="post">Submit</button>
                     </form>
-                </div>
-            {% endif %}
+                {% endif %}
+                {% if not league['rule'] %}
+                    <form>
+                        <label for="rule">Choose Rule</label>
+                        <select name="rule" id="rule">
+                            {% for rule in rules %}
+                                <option value="{{ rule[0] }}">{{ rule[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        <button formaction="{{ url_for('league', id=league['shorthand']) }}" formmethod="post">Submit</button>
+                    </form>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

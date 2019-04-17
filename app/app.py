@@ -61,14 +61,20 @@ def game(id):
 def league(id):
     global db
     if request.method == "POST":
-        db.linkTeamLeague(request.form['team'], id)
+        nTeam = request.form.get('team', None)
+        nRule = request.form.get('rule', None)
+        if nTeam is not None:
+            db.linkTeamLeague(nTeam, id)
+        elif nRule is not None:
+            db.linkLeagueRule(str(int(nRule) - 1), id)
     league = db.getLeagueByID(id)
     if league['game_id'] is not None:
         game = db.getGameByID(league['game_id'])
     else:
         game = None
     teams = db.getAll("TEAMS")
-    return render_template('league.html', league=league, game=game, teams=teams)
+    rules = db.getAll("RULES")
+    return render_template('league.html', league=league, game=game, teams=teams, rules=rules)
 
 
 @application.route("/player/<id>", methods=["GET"])
