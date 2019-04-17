@@ -231,7 +231,10 @@ def edit(type, id):
 @application.route("/delete/<type>/<id>", methods=["GET"])
 def delete(type, id):
     global db
-    db.delete(type.upper(), id)
+    if type == "Organizations":
+        db.delete(type.upper()[:-1], id)
+    else:
+        db.delete(type.upper(), id)
     return redirect(url_for(type.lower()))
 
 if __name__ ==  "__main__":
