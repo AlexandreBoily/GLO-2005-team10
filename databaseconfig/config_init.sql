@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS RULES(
 CREATE TABLE IF NOT EXISTS TEAMS(
     id SMALLINT AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
-    organization_id VARCHAR(50) REFERENCES ORGANIZATION(id)
+    organization_id smallint REFERENCES ORGANIZATION(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     PRIMARY KEY (id)
@@ -57,8 +57,9 @@ CREATE TABLE IF NOT EXISTS PLAYERS(
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     alias VARCHAR(50) NOT NULL ,
-    nationality SMALLINT,
-    team_id smallint,
+    nationality SMALLINT REFERENCES settingsNationalities(NationalityID)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE ,
     PRIMARY KEY (id)
 );
 
