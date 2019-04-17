@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS LEAGUES(
     region VARCHAR(50) DEFAULT 'Global',
     prize_pool DECIMAL(15,2) DEFAULT 0,
     online BOOLEAN DEFAULT 0,
-    game_id VARCHAR(50) REFERENCES GAMES(id)
+    game_id smallint REFERENCES GAMES(id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
     rules_id smallint REFERENCES RULES(id)
