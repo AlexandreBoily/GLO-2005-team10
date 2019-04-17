@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EsportsPedia</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link href="{{ url_for('static', filename='favicon-32x32.png') }}" rel="icon"/>
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/skeleton.css') }}" rel="stylesheet"  />
+    <link href="{{ url_for('static', filename='Skeleton-2.0.4/css/normalize.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+
+<form>
+    <div class="row navbar">
+        <button type="submit" formaction="{{ url_for('index') }}" formmethod="get"><i class="material-icons">home</i></button>
+        <button type="submit" formaction="{{ url_for('games') }}" formmethod="get">Games</button>
+        <button type="submit" formaction="{{ url_for('leagues') }}" formmethod="get">Leagues</button>
+        <button type="submit" formaction="{{ url_for('players') }}" formmethod="get">Players</button>
+        <button type="submit" formaction="{{ url_for('teams') }}" formmethod="get">Teams</button>
+        <button type="submit" formaction="{{ url_for('organizations') }}" formmethod="get">Organizations</button>
+    </div>
+</form>
+
+<div class="content landing">
+    <form class="create-form">
+        <h5>Editing {{ type }}</h5>
+        {% if type == "Game" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <input name="id" id="id" hidden value="{{ item['id'] }}"/>
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Game" value="{{ item['game_name'] }}" required>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" formaction="{{ url_for('edit', type=type+'s', id=item['id']) }}" formmethod="post" class="button-primary">Edit</button>
+            </div>
+        {% elif type == "League" %}
+            <div class="row">
+                <div class="six columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The League" value="{{ item['name'] }}" required/>
+                </div>
+                <div class="three columns">
+                    <label for="shorthand">Shorthand</label>
+                    <input name="shorthand" id="shorthand" class="u-full-width" maxlength="12" value="{{ item['shorthand'] }}" disabled required/>
+                </div>
+                <div class="three columns">
+                    <label for="region">Region</label>
+                    <input name="region" id="region" class="u-full-width" maxlength="10" placeholder="EU" value="{{ item['region'] }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="four columns">
+                    <label for="max-no-teams">Max Number of teams</label>
+                    <input name="max-no-teams" id="max-no-teams" class="u-full-width" type="number" min="2" max="64" value="{{ item['max_no_teams'] }}" required/>
+                </div>
+                <div class="four columns">
+                    <label for="prize-pool">Prize Pool</label>
+                    <input name="prize-pool" id="prize-pool" class="u-full-width" max="1000000000" min="0" type="number" value="{{ item['prize_pool'] }}" required/>
+                </div>
+                <div class="four columns">
+                    <label for="online">Online</label>
+                    <input name="online" id="online" class="u-full-width" max="1" min="0" type="number" value="{{ item['online'] }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" class="u-full-width" required>{{ item['description'] }}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" formaction="{{ url_for('edit', type=type+'s', id=item['shorthand']) }}" formmethod="post" class="button-primary">Edit</button>
+            </div>
+        {% elif type == "Player" %}
+            <div class="row">
+                <div class="six columns">
+                    <label for="first-name">First Name</label>
+                    <input name="first-name" id="first-name" class="u-full-width" maxlength="24" placeholder="John" value="{{ item['first_name'] }}" required/>
+                </div>
+                <div class="six columns">
+                    <label for="last-name">Last Name</label>
+                    <input name="last-name" id="last-name" class="u-full-width" maxlength="24" placeholder="Doe" value="{{ item['last_name'] }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="six columns">
+                    <label for="alias">Alias</label>
+                    <input name="alias" id="alias" class="u-full-width" maxlength="24" placeholder="Player One" value="{{ item['alias'] }}" required/>
+                </div>
+                <div class="six columns">
+                    <label for="nationality">Nationality</label>
+                    <select class="u-full-width" id="nationality" name="nationality" required>
+                        {% for nationality in nationalities %}
+                            <option value="{{ nationality['NationalityID'] }}"  {% if item['nationality'] == nationality['Nationality'] %} selected="selected" {% endif %}>{{ nationality['Nationality'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" formaction="{{ url_for('edit', type=type+'s', id=item['id']) }}" formmethod="post" class="button-primary">Edit</button>
+            </div>
+        {% elif type == "Team" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Team" value="{{ item['name'] }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" formaction="{{ url_for('edit', type=type+'s', id=item['id']) }}" formmethod="post" class="button-primary">Edit</button>
+            </div>
+        {% elif type == "Organization" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Organization" value="{{ item['name'] }}" required/>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" formaction="{{ url_for('edit', type=type+'s', id=item['id']) }}" formmethod="post" class="button-primary">Edit</button>
+            </div>
+        {% endif %}
+    </form>
+</div>
+
+<div class="footer">
+    <p>Created with passion by <span>TEAM 10</span> for GLO-2005</p>
+</div>
+</body>
+</html>

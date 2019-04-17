@@ -25,6 +25,10 @@
 <div class="content">
     <div class="content-title">
         <h3>{{ player['alias'] }}</h3>
+        <div>
+            <form><button formaction="{{ url_for('edit', type='Players', id=player['id']) }}" formmethod="get">Edit</button></form>
+            <form><button formaction="{{ url_for('delete', type='Players', id=player['id']) }}" formmethod="get">Delete</button></form>
+        </div>
     </div>
     <div class="content-body">
         <div class="content-description">

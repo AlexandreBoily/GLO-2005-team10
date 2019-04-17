@@ -47,22 +47,28 @@ def organizations():
     return render_template('list.html', items=organizations, pageName='Organizations', itemType='organization')
 
 
-@application.route("/game/<id>", methods=["GET"])
+@application.route("/game/<id>", methods=["GET", "POST"])
 def game(id):
     global db
+    if request.method == "POST":
+        print(request.form['league'])
     game = db.getGameByID(id)
-    return render_template('game.html', game=game)
+    leagues = db.getAll("LEAGUES")
+    return render_template('game.html', game=game, leagues=leagues)
 
 
-@application.route("/league/<id>", methods=["GET"])
+@application.route("/league/<id>", methods=["GET", "POST"])
 def league(id):
     global db
+    if request.method == "POST":
+        db.linkTeamLeague(request.form['team'], id, result=7)
     league = db.getLeagueByID(id)
     if league['game_id'] is not None:
         game = db.getGameByID(league['game_id'])
     else:
         game = None
-    return render_template('league.html', league=league, game=game)
+    teams = db.getAll("TEAMS")
+    return render_template('league.html', league=league, game=game, teams=teams)
 
 
 @application.route("/player/<id>", methods=["GET"])
@@ -141,6 +147,85 @@ def create(type):
     nationalities = db.getAllNationalities()
     return render_template('create-form.html', type=type, nationalities=nationalities)
 
+
+@application.route("/edit/<type>/<id>", methods=["GET", "POST"])
+def edit(type, id):
+    global db
+    if request.method == "POST":
+        if type == "Games":
+            res = db.update(type.upper(), {
+                "id": id,
+                "game_name": request.form["name"],
+            })
+            if res["error"]:
+                return res["msg"]
+            else:
+                return redirect(url_for('game', id=id))
+        elif type == "Leagues":
+            res = db.update(type.upper(), {
+                "name": request.form["name"],
+                "shorthand": id,
+                "max_no_teams": request.form["max-no-teams"],
+                "description": request.form["description"],
+                "region": request.form["region"],
+                "prize_pool": request.form["prize-pool"],
+                "online": request.form["online"],
+            })
+            if res["error"]:
+                return res["msg"]
+            else:
+                return redirect(url_for('league', id=id))
+        elif type == "Players":
+            res = db.update(type.upper(), {
+                "id": id,
+                "first_name": request.form['first-name'],
+                "last_name": request.form['last-name'],
+                "alias": request.form['alias'],
+                "nationality": int(request.form['nationality']),
+            })
+            if res["error"]:
+                return res["msg"]
+            else:
+                return redirect(url_for('player', id=id))
+        elif type == "Teams":
+            res = db.update(type.upper(), {
+                "id": id,
+                "name": request.form['name'],
+            })
+            if res["error"]:
+                return res["msg"]
+            else:
+                return redirect(url_for('team', id=id))
+        elif type == "Organizations":
+            res = db.update(type.upper()[:-1], {
+                "id": id,
+                "name": request.form['name'],
+            })
+            if res["error"]:
+                return res["msg"]
+            else:
+                return redirect(url_for('organization', id=id))
+    if type == "Games":
+        item = db.getGameByID(id)
+    elif type == "Leagues":
+        item = db.getLeagueByID(id)
+    elif type == "Players":
+        item = db.getPlayerByID(id)
+    elif type == "Teams":
+        item = db.getTeamByID(id)
+    elif type == "Organizations":
+        item = db.getOrganizationByID(id)
+    else:
+        redirect(url_for('index'))
+    type = type[:-1]
+    nationalities = db.getAllNationalities()
+    return render_template('edit-form.html', type=type, item=item, nationalities=nationalities)
+
+@application.route("/delete/<type>/<id>", methods=["GET"])
+def delete(type, id):
+    global db
+    db.delete(type.upper(), id)
+    return redirect(url_for(type.lower()))
 
 if __name__ ==  "__main__":
     application.run(host="0.0.0.0", port=8080, debug=True)

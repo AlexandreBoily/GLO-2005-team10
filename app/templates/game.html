@@ -23,9 +23,12 @@
 </form>
 
 <div class="content">
-    <div class="content">
     <div class="content-title">
         <h3>{{ game['game_name'] }}</h3>
+        <div>
+            <form><button formaction="{{ url_for('edit', type='Games', id=game['id']) }}" formmethod="get">Edit</button></form>
+            <form><button formaction="{{ url_for('delete', type='Games', id=game['id']) }}" formmethod="get">Delete</button></form>
+        </div>
     </div>
     <div class="content-body">
         <div class="content-description">
@@ -38,6 +41,17 @@
                 </ul>
             </form>
         </div>
+    </div>
+    <div class="content-actions">
+        <form>
+            <label for="leagues">Add Leagues</label>
+            <select name="leagues" id="leagues">
+                {% for league in leagues %}
+                    <option value="{{ league['shorthand'] }}">{{ league['name'] }}</option>
+                {% endfor %}
+            </select>
+            <button formaction="{{ url_for('game', id=game['id']) }}" formmethod="post">Submit</button>
+        </form>
     </div>
 </div>
 

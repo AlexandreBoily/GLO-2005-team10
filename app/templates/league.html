@@ -25,6 +25,10 @@
 <div class="content">
     <div class="content-title">
         <h3>{{ league['name'] }}</h3>
+        <div>
+            <form><button formaction="{{ url_for('edit', type='Leagues', id=league['shorthand']) }}" formmethod="get">Edit</button></form>
+            <form><button formaction="{{ url_for('delete', type='Leagues', id=league['shorthand']) }}" formmethod="get">Delete</button></form>
+        </div>
     </div>
     <div class="content-body">
         <div class="content-description">
@@ -46,19 +50,31 @@
             </form>
 
         </div>
-        <div class="content-info-panel">
-            <h5>Information</h5>
-            <p><span>Max number of teams:</span> {{ league['max_no_teams'] }}</p>
-            <p><span>Region:</span> {{ league['region'] }}</p>
-            <p><span>Prize pool:</span> {{ league['prize_pool'] }}</p>
-            <p><span>Online:</span> {{ league['online'] }}</p>
-            {% if game %}
-                <p><span>Game:</span> {{ game['game_name'] }}</p>
-            {% endif %}
+        <div class="content-right">
+            <div class="content-info-panel">
+                <h5>Information</h5>
+                <p><span>Max number of teams:</span> {{ league['max_no_teams'] }}</p>
+                <p><span>Region:</span> {{ league['region'] }}</p>
+                <p><span>Prize pool:</span> {{ league['prize_pool'] }}</p>
+                <p><span>Online:</span> {{ league['online'] }}</p>
+                {% if game != None %}
+                    <p><span>Game:</span> {{ game['game_name'] }}</p>
+                {% endif %}
+            </div>
+            <div class="content-actions">
+                <form>
+                    <label for="team">Add Teams</label>
+                    <select name="team" id="team">
+                        {% for team in teams %}
+                            <option value="{{ team['id'] }}">{{ team[1] }}</option>
+                        {% endfor %}
+                    </select>
+                    <button formaction="{{ url_for('league', id=league['shorthand']) }}" formmethod="post">Submit</button>
+                </form>
+            </div>
         </div>
+
     </div>
-
-
 </div>
 
 <div class="footer">

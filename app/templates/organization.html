@@ -25,6 +25,10 @@
 <div class="content">
     <div class="content-title">
         <h3>{{ organization['name'] }}</h3>
+        <div>
+            <form><button formaction="{{ url_for('edit', type='Organizations', id=organization['id']) }}" formmethod="get">Edit</button></form>
+            <form><button formaction="{{ url_for('delete', type='Organizations', id=organization['id']) }}" formmethod="get">Delete</button></form>
+        </div>
     </div>
     <form>
         <h3>Teams</h3>

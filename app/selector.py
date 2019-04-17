@@ -25,18 +25,21 @@ class selector:
         getGameByIDSTMT = "SELECT * FROM GAMES g WHERE g.id = %s "
         cursor.execute(getGameByIDSTMT, (id,))
         tmp = cursor.fetchone()
-        game = {
-            "id": tmp[0],
-            "game_name": tmp[1].replace('"', '')
-        }
+        if tmp is not None:
+            game = {
+                "id": tmp[0],
+                "game_name": tmp[1].replace('"', '')
+            }
 
-        # Game list of leagues
-        getGamesLeaguesSTMT = "SELECT shorthand, name FROM LEAGUES l WHERE l.game_id = %s"
-        cursor.execute(getGamesLeaguesSTMT, (game['id'],))
-        leagues = [{'shorthand': league[0], "name": league[1]} for league in cursor]
-        game["leagues"] = leagues
+            # Game list of leagues
+            getGamesLeaguesSTMT = "SELECT shorthand, name FROM LEAGUES l WHERE l.game_id = %s"
+            cursor.execute(getGamesLeaguesSTMT, (game['id'],))
+            leagues = [{'shorthand': league[0], "name": league[1]} for league in cursor]
+            game["leagues"] = leagues
 
-        return game
+            return game
+        else:
+            return None
 
     @classmethod
     def getLeagueByID(cls, cursor, id):
