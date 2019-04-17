@@ -93,29 +93,9 @@ class MySQLRepository:
         self.__verify_connection()
         return self.__commit(insertor.createNewOrganization(self.connector.cursor(), organization))
 
-    def updateGame(self, game):
+    def update(self, table, object):
         self.__verify_connection()
-        return self.__commit(updater.updateGame(self.connector.cursor(), game))
-
-    def updateTeam(self, team):
-        self.__verify_connection()
-        return self.__commit(updater.updateTeam(self.connector.cursor(), team))
-
-    def updatePlayer(self, player):
-        self.__verify_connection()
-        return self.__commit(updater.updatePlayer(self.connector.cursor(), player))
-
-    def updateOrganization(self, org):
-        self.__verify_connection()
-        return self.__commit(updater.updateOrganization(self.connector.cursor(), org))
-
-    def updateLeague(self, league):
-        self.__verify_connection()
-        return self.__commit(updater.updateLeague(self.connector.cursor(), league))
-
-    def updateRules(self, rule):
-        self.__verify_connection()
-        return self.__commit(updater.updateRules(self.connector.cursor(), rule))
+        return self.__commit(updater.update_prep(self.connector.cursor(), table, object))
     
     def delete(self, table, id):
         self.__verify_connection()
