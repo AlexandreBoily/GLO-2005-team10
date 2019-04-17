@@ -8,6 +8,7 @@ class selector:
             "PLAYERS": ("id", "alias"),
             "TEAMS": ("id", "name"),
             "ORGANIZATION": ("id", "name"),
+            "RULES": ("id", "name")
         }
         fields = switch.get(table_name, "error")
         return "SELECT {}, {} FROM {}".format(fields[0], fields[1], table_name)
