@@ -222,3 +222,7 @@ div.content div.content-body div.content-info-panel h5 {
     width: 100%;
     text-align: center;
 }
+
+h2.organization-name-styling {
+    margin-top: 10px;
+}
