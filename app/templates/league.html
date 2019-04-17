@@ -66,14 +66,13 @@
                     <label for="team">Add Teams</label>
                     <select name="team" id="team">
                         {% for team in teams %}
-                            <option value="{{ team['id'] }}">{{ team[1] }}</option>
+                            <option value="{{ team[0] }}">{{ team[1] }}</option>
                         {% endfor %}
                     </select>
                     <button formaction="{{ url_for('league', id=league['shorthand']) }}" formmethod="post">Submit</button>
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
