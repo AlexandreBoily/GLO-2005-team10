@@ -115,6 +115,7 @@ def create(type):
                 "first_name": request.form['first-name'],
                 "last_name": request.form['last-name'],
                 "alias": request.form['alias'],
+                "nationality": int(request.form['nationality']),
             })
             if id["error"]:
                 return id["msg"]
@@ -128,8 +129,17 @@ def create(type):
                 return id["msg"]
             else:
                 return redirect(url_for('team', id=id["id"]))
+        elif type == "Organizations":
+            id = db.createNewOrganization({
+                "name": request.form['name'],
+            })
+            if id["error"]:
+                return id["msg"]
+            else:
+                return redirect(url_for('organization', id=id["id"]))
     type = type[:-1]
-    return render_template('create-form.html', type=type)
+    nationalities = db.getAllNationalities()
+    return render_template('create-form.html', type=type, nationalities=nationalities)
 
 
 if __name__ ==  "__main__":

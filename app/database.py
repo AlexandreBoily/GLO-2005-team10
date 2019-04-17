@@ -86,3 +86,8 @@ class MySQLRepository:
     def createNewTeam(self, team):
         self.__verify_connection()
         return self.__insert(insertor.createNewTeam(self.connector.cursor(), team))
+
+
+    def createNewOrganization(self, organization):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewOrganization(self.connector.cursor(), organization))

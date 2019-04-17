@@ -34,8 +34,8 @@ class insertor:
 
     @classmethod
     def createNewPlayer(cls, cursor, player):
-        insertSTMT = "INSERT INTO PLAYER (first_name, last_name, alias) VALUES (%s, %s, %s)"
-        tuple = (player["first_name"], player["last_name"], player["alias"])
+        insertSTMT = "INSERT INTO PLAYERS (first_name, last_name, alias, nationality) VALUES (%s, %s, %s, %s)"
+        tuple = (player["first_name"], player["last_name"], player["alias"], player['nationality'])
         return cls.__insert(cursor, insertSTMT, tuple)
 
     @classmethod

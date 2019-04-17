@@ -59,7 +59,7 @@ class selector:
         }
 
         # Get rules
-        if tmp[8] is not "":
+        if tmp[8] is not None:
             cursor.execute(getRuleSTMT, (tmp[8] + 1,))
             tmp = cursor.fetchone()
             if tmp is not None:

@@ -44,7 +44,11 @@
                 </div>
                 <div class="six columns">
                     <label for="nationality">Nationality</label>
-                    <input name="nationality" id="nationality" class="u-full-width" maxlength="24" placeholder="Canadian" required/>
+                    <select class="u-full-width" id="nationality" name="nationality" required>
+                        {% for nationality in nationalities %}
+                            <option value="{{ nationality['NationalityID'] }}">{{ nationality['Nationality'] }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
         {% elif type == "Game" %}
@@ -94,6 +98,13 @@
                 <div class="twelve columns">
                     <label for="name">Name</label>
                     <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Team" required/>
+                </div>
+            </div>
+        {% elif type == "Organization" %}
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="name">Name</label>
+                    <input name="name" id="name" class="u-full-width" maxlength="24" placeholder="The Organization" required/>
                 </div>
             </div>
         {% endif %}
