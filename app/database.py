@@ -3,6 +3,7 @@ from mysql.connector import connect
 import mysql.connector
 from selector import selector
 from insertor import insertor
+from updater import updater
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -27,7 +28,7 @@ class MySQLRepository:
         if self.connector is None:
             self.__connect()
 
-    def __insert(self, returned):
+    def __commit(self, returned):
         if returned["error"]:
             return returned
         else:
@@ -73,21 +74,44 @@ class MySQLRepository:
 
     def createNewGame(self, game):
         self.__verify_connection()
-        return self.__insert(insertor.createNewGame(self.connector.cursor(), game))
+        return self.__commit(insertor.createNewGame(self.connector.cursor(), game))
 
     def createNewLeague(self, league):
         self.__verify_connection()
-        return self.__insert(insertor.createNewLeague(self.connector.cursor(), league))
+        return self.__commit(insertor.createNewLeague(self.connector.cursor(), league))
 
     def createNewPlayer(self, player):
         self.__verify_connection()
-        return self.__insert(insertor.createNewPlayer(self.connector.cursor(), player))
+        return self.__commit(insertor.createNewPlayer(self.connector.cursor(), player))
 
     def createNewTeam(self, team):
         self.__verify_connection()
-        return self.__insert(insertor.createNewTeam(self.connector.cursor(), team))
-
+        return self.__commit(insertor.createNewTeam(self.connector.cursor(), team))
 
     def createNewOrganization(self, organization):
         self.__verify_connection()
-        return self.__insert(insertor.createNewOrganization(self.connector.cursor(), organization))
+        return self.__commit(insertor.createNewOrganization(self.connector.cursor(), organization))
+
+    def updateGame(self, game):
+        self.__verify_connection()
+        return self.__commit(updater.updateGame(self.connector.cursor(), game))
+
+    def updateTeam(self, team):
+        self.__verify_connection()
+        return self.__commit(updater.updateTeam(self.connector.cursor(), team))
+
+    def updatePlayer(self, player):
+        self.__verify_connection()
+        return self.__commit(updater.updatePlayer(self.connector.cursor(), player))
+
+    def updateOrganization(self, org):
+        self.__verify_connection()
+        return self.__commit(updater.updateOrganization(self.connector.cursor(), org))
+
+    def updateLeague(self, league):
+        self.__verify_connection()
+        return self.__commit(updater.updateLeague(self.connector.cursor(), league))
+
+    def updateRules(self, rule):
+        self.__verify_connection()
+        return self.__commit(updater.updateRules(self.connector.cursor(), rule))

@@ -13,12 +13,6 @@ class insertor:
                     "msg": e.msg,
                     "no": e.errno}
 
-    @staticmethod
-    def __returnID(cursor):
-        stmt = "SELECT LAST_INSERT_ID();"
-        cursor.execute(stmt)
-        return cursor.fetchone()[0]
-
     @classmethod
     def createNewGame(cls, cursor, game):
         insertSTMT = "INSERT INTO GAMES (game_name) VALUES (%s)"
@@ -68,6 +62,6 @@ class insertor:
     @classmethod
     def createNewRules(cls, cursor, rule):
         insertSTMT = "INSERT INTO RULES (name, description, no_teams_per_match, no_players_per_teams) VALUES (%s, %s, %s)"
-        tuple = (rule["name"], rule["description"], rule["no_teams_per_match"], rule["no_players, per_team"])
+        tuple = (rule["name"], rule["description"], rule["no_teams_per_match"], rule["no_players_per_team"])
         return cls.__insert(cursor, insertSTMT, tuple)
 
