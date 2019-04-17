@@ -71,3 +71,14 @@ class MySQLRepository:
         self.__verify_connection()
         return self.__insert(insertor.createNewGame(self.connector.cursor(), game))
 
+    def createNewLeague(self, league):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewLeague(self.connector.cursor(), league))
+
+    def createNewPlayer(self, player):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewPlayer(self.connector.cursor(), player))
+
+    def createNewTeam(self, team):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewTeam(self.connector.cursor(), team))

@@ -28,8 +28,10 @@
     </div>
     <div class="content-body">
         <div class="content-description">
-            <h5>Organisation</h5>
-            <p>{{ team['org_name'] }}</p>
+            {% if team['org_name'] %}
+                <h5>Organisation</h5>
+                <p>{{ team['org_name'] }}</p>
+            {% endif %}
             <h5>Players</h5>
             <form>
                 <ul class="list">

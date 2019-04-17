@@ -59,16 +59,18 @@ class selector:
         }
 
         # Get rules
-        cursor.execute(getRuleSTMT, (tmp[8],))
-        tmp = cursor.fetchone()
-        rule = {
-            "id": tmp[0],
-            "name": tmp[1],
-            "max_no_teams": tmp[2],
-            "no_teams_per_match": tmp[3],
-            "no_players_per_teams": tmp[4]
-        }
-        league["rule"] = rule
+        if tmp[8] is not "":
+            cursor.execute(getRuleSTMT, (tmp[8],))
+            tmp = cursor.fetchone()
+            if tmp is not None:
+                rule = {
+                    "id": tmp[0],
+                    "name": tmp[1],
+                    "max_no_teams": tmp[2],
+                    "no_teams_per_match": tmp[3],
+                    "no_players_per_teams": tmp[4]
+                }
+                league["rule"] = rule
 
         # Get teams participating in this league
         getTeamsSTMT = "SELECT t.id, t.name, l.result FROM TEAMS t INNER JOIN (SELECT * FROM TEAMS_LEAGUES WHERE league_id = %s) l on t.id = l.team_id"
@@ -97,7 +99,8 @@ class selector:
         #Get org name
         cursor.execute(getOrganizationSTMT, (id,))
         tmp = cursor.fetchone()
-        team["org_name"] = tmp[0]
+        if tmp is not None:
+            team["org_name"] = tmp[0]
 
         #Get Leagues in which the team participates
         cursor.execute(getLeaguesSTMT, (id,))
@@ -129,7 +132,8 @@ class selector:
 
         cursor.execute(getNationalitySTMT, (tmp[4],))
         tmp = cursor.fetchone()
-        player["nationality"] = tmp[0]
+        if tmp is not None:
+            player["nationality"] = tmp[0]
 
         cursor.execute(getTeamsSTMT, (id,))
         teams = [{"id": team[0], "name": team[1], "start": team[2], "end": team[3]}for team in cursor]
