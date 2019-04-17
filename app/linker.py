@@ -39,3 +39,9 @@ class linker:
             tuple = (team_id, league_id)
 
         return cls.__link(cursor, insertSTMT, tuple)
+
+    @classmethod
+    def linkLeagueRule(cls, cursor, rule_id, league_id):
+        insertSTMT = "UPDATE LEAGUES SET rules_id = %s WHERE shorthand = %s"
+        tuple = (rule_id, league_id)
+        return cls.__link(cursor, insertSTMT, tuple)
