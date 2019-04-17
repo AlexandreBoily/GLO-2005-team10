@@ -47,11 +47,9 @@ def organizations():
     return render_template('list.html', items=organizations, pageName='Organizations', itemType='organization')
 
 
-@application.route("/game/<id>", methods=["GET", "POST"])
+@application.route("/game/<id>", methods=["GET"])
 def game(id):
     global db
-    if request.method == "POST":
-        print(request.form['league'])
     game = db.getGameByID(id)
     leagues = db.getAll("LEAGUES")
     return render_template('game.html', game=game, leagues=leagues)
