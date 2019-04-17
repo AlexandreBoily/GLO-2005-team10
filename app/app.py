@@ -61,7 +61,7 @@ def game(id):
 def league(id):
     global db
     if request.method == "POST":
-        db.linkTeamLeague(request.form['team'], id, result=7)
+        db.linkTeamLeague(request.form['team'], id)
     league = db.getLeagueByID(id)
     if league['game_id'] is not None:
         game = db.getGameByID(league['game_id'])
