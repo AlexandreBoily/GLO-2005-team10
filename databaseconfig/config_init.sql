@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS PLAYERS(
     nationality SMALLINT REFERENCES settingsNationalities(NationalityID)
         ON UPDATE CASCADE
         ON DELETE CASCADE ,
+    team_id smallint,
     PRIMARY KEY (id)
 );
 
