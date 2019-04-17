@@ -6,8 +6,7 @@ class deletor:
     def __delete(cls, cursor, STMT, tuple):
         try:
             cursor.execute(STMT, tuple)
-            return {"error": False,
-                    "id": cursor.lastrowid}
+            return {"error": False}
         except (mysql.connector.Error, mysql.connector.Warning) as e:
             return {"error": True,
                     "msg": e.msg,
@@ -22,8 +21,8 @@ class deletor:
 
     @classmethod
     def deleteTeam(cls, cursor, team):
-        deleteSTMT = "DELETE FROM TEAMS WHERE name=%s"
-        tuple = (team["name"],)
+        deleteSTMT = "DELETE FROM TEAMS WHERE id=%s"
+        tuple = (team["id"],)
         return cls.__delete(cursor, deleteSTMT, tuple)
 
     @classmethod
@@ -34,23 +33,15 @@ class deletor:
 
     @classmethod
     def deleteOrganization(cls,cursor, org):
-        deleteSTMT = "DELETE FROM ORGANIZATION WHERE name=%s"
-        tuple = (org["name"],)
+        deleteSTMT = "DELETE FROM ORGANIZATION WHERE id=%s"
+        tuple = (org["id"],)
         return cls.__delete(cursor, deleteSTMT, tuple)
 
     @classmethod
     def deleteLeague(cls, cursor, league):
         deleteSTMT = "DELETE FROM LEAGUES WHERE shorthand=%s"
         tuple = (league["shorthand"])
-
-        returned = cls.__delete(cursor, deleteSTMT, tuple)
-        if not returned["error"]:
-            return {
-                "error": False,
-                "id": league["shorthand"]
-            }
-        else:
-            return returned
+        return cls.__delete(cursor, deleteSTMT, tuple)
 
     @classmethod
     def deleteRules(cls, cursor, rule):

@@ -49,6 +49,7 @@ class selector:
         cursor.execute(getLeagueByIDSTMT, (id,))
         tmp = cursor.fetchone()
         league = {
+            "shorthand": tmp[0],
             "name": tmp[1],
             "max_no_teams": tmp[2],
             "description": tmp[3],
