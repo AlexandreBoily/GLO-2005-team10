@@ -58,7 +58,10 @@ def game(id):
 def league(id):
     global db
     league = db.getLeagueByID(id)
-    game = db.getGameByID(league['game_id'])
+    if league['game_id'] is not None:
+        game = db.getGameByID(league['game_id'])
+    else:
+        game = None
     return render_template('league.html', league=league, game=game)
 
 
@@ -93,8 +96,38 @@ def create(type):
                 return id["msg"]
             else:
                 return redirect(url_for('game', id=id["id"]))
-        else:
-            return "Mes Couilles"
+        elif type == "Leagues":
+            id = db.createNewLeague({
+                "name": request.form["name"],
+                "shorthand": request.form["shorthand"],
+                "max_no_teams": request.form["max-no-teams"],
+                "description": request.form["description"],
+                "region": request.form["region"],
+                "prize_pool": request.form["prize-pool"],
+                "online": request.form["online"],
+            })
+            if id["error"]:
+                return id["msg"]
+            else:
+                return redirect(url_for('league', id=id["id"]))
+        elif type == "Players":
+            id = db.createNewPlayer({
+                "first_name": request.form['first-name'],
+                "last_name": request.form['last-name'],
+                "alias": request.form['alias'],
+            })
+            if id["error"]:
+                return id["msg"]
+            else:
+                return redirect(url_for('player', id=id["id"]))
+        elif type == "Teams":
+            id = db.createNewTeam({
+                "name": request.form['name'],
+            })
+            if id["error"]:
+                return id["msg"]
+            else:
+                return redirect(url_for('team', id=id["id"]))
     type = type[:-1]
     return render_template('create-form.html', type=type)
 

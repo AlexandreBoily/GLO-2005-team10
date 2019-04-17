@@ -47,7 +47,7 @@ class insertor:
     @classmethod
     def createNewLeague(cls, cursor, league):
         insertSTMT = "INSERT INTO LEAGUES (shorthand, name, max_no_teams, description, region, prize_pool, online) VALUES" \
-                     "(%s,%s,%s,%s,%s,%s)"
+                     "(%s,%s,%s,%s,%s,%s,%s)"
         tuple = (league["shorthand"],
                  league["name"],
                  league["max_no_teams"],
@@ -58,8 +58,10 @@ class insertor:
 
         returned = cls.__insert(cursor, insertSTMT, tuple)
         if not returned["error"]:
-            returned["id"] = league["shorthand"]
-            return returned
+            return {
+                "error": False,
+                "id": league["shorthand"]
+            }
         else:
             return returned
 

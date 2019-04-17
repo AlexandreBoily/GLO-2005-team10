@@ -74,13 +74,19 @@
                     <label for="max-no-teams">Max Number of teams</label>
                     <input name="max-no-teams" id="max-no-teams" class="u-full-width" type="number" min="2" max="64" required/>
                 </div>
-                <div class="four columns" columns">
+                <div class="four columns">
                     <label for="prize-pool">Prize Pool</label>
                     <input name="prize-pool" id="prize-pool" class="u-full-width" max="1000000000" min="0" type="number" required/>
                 </div>
                 <div class="four columns">
                     <label for="online">Online</label>
                     <input name="online" id="online" class="u-full-width" max="1" min="0" type="number" required/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="twelve columns">
+                    <label for="description">Description</label>
+                    <textarea name="description" id="description" class="u-full-width" required></textarea>
                 </div>
             </div>
         {% elif type == "Team" %}

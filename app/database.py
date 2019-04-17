@@ -44,6 +44,10 @@ class MySQLRepository:
         self.__verify_connection()
         return selector.getAll(self.connector.cursor(), table_name)
 
+    def getAllNationalities(self):
+        self.__verify_connection()
+        return selector.getAllNationalities(self.connector.cursor())
+
     def getGameByID(self, id):
         self.__verify_connection()
         game = selector.getGameByID(self.connector.cursor(), id)
@@ -71,7 +75,14 @@ class MySQLRepository:
         self.__verify_connection()
         return self.__insert(insertor.createNewGame(self.connector.cursor(), game))
 
-    def getAllNationalities(self):
+    def createNewLeague(self, league):
         self.__verify_connection()
-        return selector.getAllNationalities(self.connector.cursor())
+        return self.__insert(insertor.createNewLeague(self.connector.cursor(), league))
 
+    def createNewPlayer(self, player):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewPlayer(self.connector.cursor(), player))
+
+    def createNewTeam(self, team):
+        self.__verify_connection()
+        return self.__insert(insertor.createNewTeam(self.connector.cursor(), team))

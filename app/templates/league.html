@@ -30,10 +30,12 @@
         <div class="content-description">
             <h5>Description</h5>
             <p>{{ league['description'] }}</p>
-            <h5>Rules</h5>
-            <p>{{ league['rule']['name'] }}</p>
-            <p><span>Number of teams per match: </span>{{ league['rule']['no_teams_per_match'] }}</p>
-            <p><span>Number players per team: </span>{{ league['rule']['no_players_per_teams'] }}</p>
+            {% if league['rule'] %}
+                <h5>Rules</h5>
+                <p>{{ league['rule']['name'] }}</p>
+                <p><span>Number of teams per match: </span>{{ league['rule']['no_teams_per_match'] }}</p>
+                <p><span>Number players per team: </span>{{ league['rule']['no_players_per_teams'] }}</p>
+            {% endif %}
             <h5>Participating Teams</h5>
             <form>
                 <ul class="list">
@@ -50,7 +52,9 @@
             <p><span>Region:</span> {{ league['region'] }}</p>
             <p><span>Prize pool:</span> {{ league['prize_pool'] }}</p>
             <p><span>Online:</span> {{ league['online'] }}</p>
-            <p><span>Game:</span> {{ game['game_name'] }}</p>
+            {% if game %}
+                <p><span>Game:</span> {{ game['game_name'] }}</p>
+            {% endif %}
         </div>
     </div>
 
