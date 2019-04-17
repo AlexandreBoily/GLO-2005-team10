@@ -71,3 +71,7 @@ class MySQLRepository:
         self.__verify_connection()
         return self.__insert(insertor.createNewGame(self.connector.cursor(), game))
 
+    def getAllNationalities(self):
+        self.__verify_connection()
+        return selector.getAllNationalities(self.connector.cursor())
+

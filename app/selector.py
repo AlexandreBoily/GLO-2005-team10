@@ -156,3 +156,11 @@ class selector:
         organization["teams"] = teams
 
         return organization
+
+    @classmethod
+    def getAllNationalities(cls, cursor):
+        getNatSTMT = "SELECT * FROM settingsNationalities"
+
+        cursor.execute(getNatSTMT)
+        natArray = [{"NationalityID": nat[0], "Nationality": nat[1]} for nat in cursor]
+        return natArray
