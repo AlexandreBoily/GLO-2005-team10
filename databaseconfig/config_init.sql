@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS LEAGUES(
 );
 
 CREATE TABLE IF NOT EXISTS RULES(
-    id smallint,
+    id smallint AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL ,
     description TEXT,
     no_teams_per_match SMALLINT NOT NULL ,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS RULES(
 );
 
 CREATE TABLE IF NOT EXISTS TEAMS(
-    id SMALLINT,
+    id SMALLINT AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     organization_id VARCHAR(50) REFERENCES ORGANIZATION(id)
         ON UPDATE CASCADE
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS TEAMS(
 );
 
 CREATE TABLE IF NOT EXISTS ORGANIZATION(
-    id smallint,
+    id smallint AUTO_INCREMENT,
     name VARCHAR(50),
     logo VARCHAR(200),
     PRIMARY KEY (id)
@@ -144,17 +144,20 @@ LOAD DATA INFILE '/var/lib/mysql-files/players_data.csv' INTO TABLE PLAYERS
 LOAD DATA INFILE '/var/lib/mysql-files/rules_data.csv' INTO TABLE RULES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,description,no_teams_per_match,no_players_per_teams,game_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/organization_data.csv' INTO TABLE ORGANIZATION
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,logo);
 
 LOAD DATA INFILE '/var/lib/mysql-files/teams_data.csv' INTO TABLE TEAMS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (name,organization_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/players_team_data.csv' INTO TABLE PLAYERS_TEAMS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
