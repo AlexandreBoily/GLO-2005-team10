@@ -59,7 +59,7 @@ class selector:
         }
 
         # Get rules
-        cursor.execute(getRuleSTMT, (tmp[8],))
+        cursor.execute(getRuleSTMT, (tmp[8] + 1,))
         tmp = cursor.fetchone()
         rule = {
             "id": tmp[0],
