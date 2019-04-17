@@ -4,6 +4,7 @@ import mysql.connector
 from selector import selector
 from insertor import insertor
 from updater import updater
+from deletor import deletor
 
 class MySQLRepository:
     MYSQL_URI = "db"
@@ -115,3 +116,7 @@ class MySQLRepository:
     def updateRules(self, rule):
         self.__verify_connection()
         return self.__commit(updater.updateRules(self.connector.cursor(), rule))
+    
+    def delete(self, table, id):
+        self.__verify_connection()
+        return self.__commit(deletor.delete_prep(self.connector.cursor(), table, id))
