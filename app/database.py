@@ -109,3 +109,7 @@ class MySQLRepository:
     def linkTeamLeague(self, team_id, league_id, **kwargs):
         self.__verify_connection()
         return self.__commit(linker.linkTeamLeague(self.connector.cursor(), team_id, league_id, **kwargs))
+
+    def linkLeagueRule(self, rule_id, league_id):
+        self.__verify_connection()
+        return self.__commit(linker.linkLeagueRule(self.connector.cursor(), rule_id, league_id))

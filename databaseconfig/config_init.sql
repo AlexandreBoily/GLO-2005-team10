@@ -94,7 +94,7 @@ INSERT INTO settingsNationalities VALUES (1,'Afghan'),(2,'Albanian'),(3,'Algeria
 
 DELIMITER //
 
-CREATE TRIGGER teams_result
+CREATE TRIGGER generate_default_teams_result
 BEFORE INSERT
    ON TEAMS_LEAGUES FOR EACH ROW
 
