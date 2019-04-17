@@ -17,31 +17,34 @@ class updater:
     def update_prep(cls, cursor, table, object):
         switch = {
             "GAMES": {"STMT": "UPDATE GAMES SET game_name = %s WHERE id = %s",
-                      "tuple": (object["game_name"], object["id"]),
-                      "id": object["id"]},
+                      "tuple": ("game_name", "id"),
+                      "id": "id"},
+
             "TEAMS": {"STMT": "UPDATE TEAMS SET name = %s WHERE id = %s",
-                      "tuple": (object["name"], object["id"]),
-                      "id": object["id"]},
+                      "tuple": ("name", "id"),
+                      "id": "id"},
+
             "PLAYERS": {"STMT": "UPDATE PLAYERS SET first_name = %s, last_name = %s, alias = %s, nationality = %s WHERE id = %s",
-                      "tuple": (object["first_name"], object["last_name"], object["alias"], object['nationality'], object["id"]),
-                      "id": object["id"]},
+                      "tuple": ("first_name", "last_name", "alias", 'nationality', "id"),
+                      "id": "id"},
+
             "ORGANIZATION": {"STMT": "UPDATE ORGANIZATION SET name = %s WHERE id = %s",
-                      "tuple": (object["name"], object["id"]),
-                      "id": object["id"]},
+                      "tuple": ("name", "id"),
+                      "id": "id"},
             "LEAGUES": {"STMT": "UPDATE LEAGUES SET name = %s, max_no_teams = %s, description = %s, region = %s, prize_pool = %s, online = %s WHERE shorthand = %s ",
-                      "tuple": (object["name"],
-                             object["max_no_teams"],
-                             object["description"],
-                             object["region"],
-                             object["prize_pool"],
-                             object["online"],
-                             object["shorthand"]
-                             ),
-                      "id": object["shorthand"]},
+                      "tuple": ("name",
+                                "max_no_teams",
+                                "description",
+                                "region",
+                                "prize_pool",
+                                 "online",
+                                 "shorthand"
+                                ),
+                      "id": "shorthand"},
             "RULES": {"STMT": "UPDATE RULES SET name = %s, description = %s, no_teams_per_match = %s, no_players_per_teams = %s WHERE id = %s",
-                      "tuple": (object["name"], object["description"], object["no_teams_per_match"], object["no_players_per_team"], object["id"]),
-                      "id": object["id"]},
+                      "tuple": ("name", "description", "no_teams_per_match", "no_players_per_team", "id"),
+                      "id": "id"}
         }
 
         result = switch[table]
-        return cls.__update(cursor, result["STMT"], result["tuple"], result["id"])
+        return cls.__update(cursor, result["STMT"], (object[x] for x in result["tuple"]), object[result["id"]])
