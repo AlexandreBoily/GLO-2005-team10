@@ -15,8 +15,8 @@ class deletor:
 
     @classmethod
     def deleteGame(cls, cursor, game):
-        deleteSTMT = "DELETE FROM GAMES WHERE game_name=%s"
-        tuple = (game["game_name"],)
+        deleteSTMT = "DELETE FROM GAMES WHERE id=%s"
+        tuple = (game["id"],)
         return cls.__delete(cursor, deleteSTMT, tuple)
 
 
