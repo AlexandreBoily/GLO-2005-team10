@@ -47,4 +47,4 @@ class updater:
         }
 
         result = switch[table]
-        return cls.__update(cursor, result["STMT"], (object[x] for x in result["tuple"]), object[result["id"]])
+        return cls.__update(cursor, result["STMT"], tuple(object[x] for x in result["tuple"]), object[result["id"]])
