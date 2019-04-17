@@ -89,7 +89,10 @@ def create(type):
             id = db.createNewGame({
                 "game_name": request.form["name"],
             })
-            return redirect(url_for('game', id=id))
+            if id["error"]:
+                return id["msg"]
+            else:
+                return redirect(url_for('game', id=id["id"]))
         else:
             return "Mes Couilles"
     type = type[:-1]

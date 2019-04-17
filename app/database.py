@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from mysql.connector import connect
+import mysql.connector
 from selector import selector
 from insertor import insertor
 
@@ -25,6 +26,19 @@ class MySQLRepository:
     def __verify_connection(self):
         if self.connector is None:
             self.__connect()
+
+    def __insert(self, returned):
+        if returned["error"]:
+            return returned
+        else:
+            try:
+                self.connector.commit()
+                return returned
+            except mysql.connector.Error as e:
+                self.connector.rollback()
+                return {"error": True,
+                        "msg": e.msg,
+                        "no": e.errno}
 
     def getAll(self, table_name):
         self.__verify_connection()
@@ -55,4 +69,5 @@ class MySQLRepository:
 
     def createNewGame(self, game):
         self.__verify_connection()
-        return insertor.createNewGame(self.connector.cursor(), game)
+        return self.__insert(insertor.createNewGame(self.connector.cursor(), game))
+

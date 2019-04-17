@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS EsportsWiki;
 USE EsportsWiki;
 
 CREATE TABLE IF NOT EXISTS GAMES(
-    id smallint,
+    id smallint auto_increment,
     game_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS ORGANIZATION(
 );
 
 CREATE TABLE IF NOT EXISTS PLAYERS(
-    id SMALLINT NOT NULL,
+    id SMALLINT AUTO_INCREMENT,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     alias VARCHAR(50) NOT NULL ,
@@ -127,7 +127,8 @@ INSERT INTO settingsNationalities VALUES (1,'Afghan'),(2,'Albanian'),(3,'Algeria
 LOAD DATA INFILE '/var/lib/mysql-files/games_data.csv' INTO TABLE GAMES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (game_name);
 
 LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.csv' INTO TABLE LEAGUES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
@@ -137,7 +138,8 @@ LOAD DATA INFILE '/var/lib/mysql-files/leagues_data.csv' INTO TABLE LEAGUES
 LOAD DATA INFILE '/var/lib/mysql-files/players_data.csv' INTO TABLE PLAYERS
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
     LINES TERMINATED BY '\n'
-    IGNORE 1 LINES;
+    IGNORE 1 LINES
+    (first_name,last_name,alias,nationality,team_id);
 
 LOAD DATA INFILE '/var/lib/mysql-files/rules_data.csv' INTO TABLE RULES
     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
